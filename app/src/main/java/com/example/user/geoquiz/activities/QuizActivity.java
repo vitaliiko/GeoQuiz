@@ -67,6 +67,7 @@ public class QuizActivity extends AppCompatActivity {
                 if (nextButton.getText().toString().equals("Next")) {
                     checkResult();
                     currentQuestionNum++;
+                    nextButton.setText(currentQuestionNum == quiz.getQuestions().size() - 1 ? "Done" : "Next");
                     prevButton.setEnabled(currentQuestionNum > 0);
                     prepareQuestion();
                 }
@@ -77,7 +78,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 currentQuestionNum--;
-                nextButton.setText(currentQuestionNum == quiz.getQuestions().size() - 1 ? "Done" : "Next");
+                nextButton.setText("Next");
                 prepareQuestion();
             }
         });
@@ -104,23 +105,23 @@ public class QuizActivity extends AppCompatActivity {
 
         TextView quizAttempts = (TextView) findViewById(R.id.quizAttempts);
         assert quizAttempts != null;
-//        quizAttempts.setText(quiz.getAttempts());
+        quizAttempts.setText(Integer.toString(quiz.getAttempts()));
 
         TextView quizBestResult = (TextView) findViewById(R.id.quizBestResult);
         assert quizBestResult != null;
-//        quizBestResult.setText(quiz.getBestResult());
+        quizBestResult.setText(Integer.toString(quiz.getBestResult()));
     }
 
     private void prepareQuestion() {
         Question question = quiz.getQuestions().get(currentQuestionNum);
 
-//        TextView currentQuestionNum = (TextView) findViewById(R.id.currentQuestionNum);
-//        assert currentQuestionNum != null;
-//        currentQuestionNum.setText(this.currentQuestionNum + 1);
-//
-//        TextView questionsCount = (TextView) findViewById(R.id.questionsCount);
-//        assert questionsCount != null;
-//        questionsCount.setText(quiz.getQuestions().size());
+        TextView currentQuestionNum = (TextView) findViewById(R.id.currentQuestionNum);
+        assert currentQuestionNum != null;
+        currentQuestionNum.setText(Integer.toString(this.currentQuestionNum + 1));
+
+        TextView questionsCount = (TextView) findViewById(R.id.questionsCount);
+        assert questionsCount != null;
+        questionsCount.setText(Integer.toString(quiz.getQuestions().size()));
 
         TextView questionText = (TextView) findViewById(R.id.questionText);
         assert questionText != null;
