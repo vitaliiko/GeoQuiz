@@ -1,4 +1,4 @@
-package com.example.user.goeguiz.activities;
+package com.example.user.geoquiz.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.user.goeguiz.R;
-import com.example.user.goeguiz.model.QuizProvider;
+import com.example.user.geoquiz.R;
+import com.example.user.geoquiz.model.QuizProvider;
 
 public class MainActivity extends AppCompatActivity {
 

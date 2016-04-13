@@ -1,4 +1,4 @@
-package com.example.user.goeguiz.model;
+package com.example.user.geoquiz.model;
 
 import java.io.Serializable;
 import java.util.List;

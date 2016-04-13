@@ -1,4 +1,4 @@
-package com.example.user.goeguiz;
+package com.example.user.geoquiz;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
