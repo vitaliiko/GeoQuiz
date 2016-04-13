@@ -36,7 +36,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        quiz = (Quiz) getIntent().getSerializableExtra("quiz");
+        quiz = QuizUtil.loadQuiz(this);
         questions = QuizUtil.getRandomQuestions(quiz.getQuestions());
 
         prepareQuizInfo();
@@ -191,6 +191,7 @@ public class QuizActivity extends AppCompatActivity {
             userAnswers.remove(answer);
         }
         result = QuizUtil.countRightAnswers(quiz, userAnswers);
+        QuizUtil.saveQuiz(quiz, this);
     }
 
     private void prepareResultInfo() {

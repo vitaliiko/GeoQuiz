@@ -1,5 +1,11 @@
 package com.example.user.geoquiz.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,8 +18,26 @@ public class QuizUtil {
 
     public static final int QUESTIONS_COUNT = 5;
 
-    public static Quiz prepareQuiz() {
-        return new Quiz("Quiz", "sdsdfs sdfsdf sdfsdf", getQuestions());
+    public static void prepareQuiz(Context context) {
+        Quiz quiz = new Quiz("Quiz", "sdsdfs sdfsdf sdfsdf", getQuestions());
+        saveQuiz(quiz, context);
+    }
+
+    public static void saveQuiz(Quiz quiz, Context context) {
+        SharedPreferences appSharedPrefs =
+                PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(quiz);
+        prefsEditor.putString("quiz", json);
+        prefsEditor.apply();
+    }
+
+    public static Quiz loadQuiz(Context context) {
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        String json = preferences.getString("quiz", "");
+        return new Gson().fromJson(json, Quiz.class);
     }
 
     private static List<Question> getQuestions() {
