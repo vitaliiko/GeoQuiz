@@ -1,4 +1,4 @@
-package com.example.user.goeguiz;
+package com.example.user.goeguiz.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.example.user.goeguiz.R;
+import com.example.user.goeguiz.model.QuizProvider;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, QuizActivity.class);
+                intent.putExtra("quiz", QuizProvider.prepareQuiz());
                 startActivity(intent);
             }
         });
