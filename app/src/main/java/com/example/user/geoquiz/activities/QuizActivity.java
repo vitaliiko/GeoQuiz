@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Context context = this;
     private Quiz quiz;
@@ -35,6 +35,7 @@ public class QuizActivity extends AppCompatActivity {
     private Map<Integer, Integer> userAnswers = new HashMap<>();
 
     private Button nextButton;
+    private Button prevButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,130 +43,112 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         nextButton = (Button) findViewById(R.id.nextButton);
+        prevButton = (Button) findViewById(R.id.prevButton);
         quiz = QuizUtil.loadQuiz(this);
-        questions = QuizUtil.getRandomQuestions(quiz.getQuestions());
 
+        setClickListeners();
         prepareQuizInfo();
-        addListenerOnStartButton();
-        addListenerOnNavigationButtons();
-        addListenerOnShowAnswerButton();
-        addListenerOnTryAgainButton();
-        addListenerOnMainMenuButton();
-        addListenerOnResetButton();
     }
 
-    private void addListenerOnStartButton() {
-        Button startButton = (Button) findViewById(R.id.startButton);
-        assert startButton != null;
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewGroup startLayout = (ViewGroup) findViewById(R.id.startLayout);
-                assert startLayout != null;
-                startLayout.setVisibility(View.GONE);
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.startButton:
+            case R.id.tryAgainButton: {
                 startQuiz();
+                break;
             }
-        });
+            case R.id.nextButton: {
+                nextQuestion();
+                break;
+            }
+            case R.id.prevButton: {
+                prevQuestion();
+                break;
+            }
+            case R.id.showAnswerButton: {
+                showRightAnswer();
+                break;
+            }
+            case R.id.mainMenuButton: {
+                goToMainMenu();
+                break;
+            }
+            case R.id.resetButton: {
+                resetResults();
+                break;
+            }
+        }
     }
 
-    private void addListenerOnNavigationButtons() {
-        final Button prevButton = (Button) findViewById(R.id.prevButton);
-        assert prevButton != null;
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (nextButton.getText().toString().equals("Next")) {
-                    saveUserAnswer();
-                    currentQuestionNum++;
-                    nextButton.setText(currentQuestionNum == questions.size() - 1 ? "Done" : "Next");
-                    prevButton.setEnabled(currentQuestionNum > 0);
-                    prepareQuestion();
-                } else {
-                    saveUserAnswer();
-                    getResult();
-                    prepareResultInfo();
-
-                    ViewGroup questionLayout = (ViewGroup) findViewById(R.id.questionLayout);
-                    assert questionLayout != null;
-                    questionLayout.setVisibility(View.GONE);
-
-                    ViewGroup resultLayout = (ViewGroup) findViewById(R.id.resultLayout);
-                    assert resultLayout != null;
-                    resultLayout.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        prevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentQuestionNum--;
-                nextButton.setText("Next");
-                prevButton.setEnabled(currentQuestionNum > 0);
-                prepareQuestion();
-            }
-        });
+    private void setClickListeners() {
+        findViewById(R.id.startButton).setOnClickListener(this);
+        findViewById(R.id.tryAgainButton).setOnClickListener(this);
+        findViewById(R.id.nextButton).setOnClickListener(this);
+        findViewById(R.id.prevButton).setOnClickListener(this);
+        findViewById(R.id.mainMenuButton).setOnClickListener(this);
+        findViewById(R.id.resetButton).setOnClickListener(this);
     }
 
-    private void addListenerOnShowAnswerButton() {
-        Button button = (Button) findViewById(R.id.showAnswerButton);
-        assert button != null;
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int rightAnswer = questions.get(currentQuestionNum).getRightAnswer();
-                RadioButton radioButton = (RadioButton) findViewById(rightAnswer);
-                assert radioButton != null;
-                radioButton.setChecked(true);
-                showingAnswers.add(currentQuestionNum);
-            }
-        });
+    private void nextQuestion() {
+        if (nextButton.getText().toString().equals("Next")) {
+            saveUserAnswer();
+            currentQuestionNum++;
+            nextButton.setText(currentQuestionNum == questions.size() - 1 ? "Done" : "Next");
+            prevButton.setEnabled(currentQuestionNum > 0);
+            prepareQuestion();
+        } else {
+            saveUserAnswer();
+            getResult();
+            prepareResultInfo();
+
+            ViewGroup questionLayout = (ViewGroup) findViewById(R.id.questionLayout);
+            assert questionLayout != null;
+            questionLayout.setVisibility(View.GONE);
+
+            ViewGroup resultLayout = (ViewGroup) findViewById(R.id.resultLayout);
+            assert resultLayout != null;
+            resultLayout.setVisibility(View.VISIBLE);
+        }
     }
 
-    private void addListenerOnTryAgainButton() {
-        Button button = (Button) findViewById(R.id.tryAgainButton);
-        assert button != null;
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewGroup resultLayout = (ViewGroup) findViewById(R.id.resultLayout);
-                assert resultLayout != null;
-                resultLayout.setVisibility(View.GONE);
-
-                startQuiz();
-                nextButton.setText("Next");
-            }
-        });
+    private void prevQuestion() {
+        currentQuestionNum--;
+        nextButton.setText("Next");
+        prevButton.setEnabled(currentQuestionNum > 0);
+        prepareQuestion();
     }
 
-    private void addListenerOnMainMenuButton() {
-        Button button = (Button) findViewById(R.id.mainMenuButton);
-        assert button != null;
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+    private void showRightAnswer() {
+        int rightAnswer = questions.get(currentQuestionNum).getRightAnswer();
+        RadioButton radioButton = (RadioButton) findViewById(rightAnswer);
+        assert radioButton != null;
+        radioButton.setChecked(true);
+        showingAnswers.add(currentQuestionNum);
     }
 
-    private void addListenerOnResetButton() {
-        Button button = (Button) findViewById(R.id.resetButton);
-        assert button != null;
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quiz.setAttempts(0);
-                quiz.setBestResult(0);
-                QuizUtil.saveQuiz(quiz, context);
-            }
-        });
+    private void goToMainMenu() {
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void resetResults(){
+        quiz.setAttempts(0);
+        quiz.setBestResult(0);
+        QuizUtil.saveQuiz(quiz, context);
     }
 
     private void startQuiz() {
+        questions = QuizUtil.getRandomQuestions(quiz.getQuestions());
+
+        ViewGroup resultLayout = (ViewGroup) findViewById(R.id.resultLayout);
+        assert resultLayout != null;
+        resultLayout.setVisibility(View.GONE);
+
+        ViewGroup startLayout = (ViewGroup) findViewById(R.id.startLayout);
+        assert startLayout != null;
+        startLayout.setVisibility(View.GONE);
+
         ViewGroup questionLayout = (ViewGroup) findViewById(R.id.questionLayout);
         assert questionLayout != null;
         questionLayout.setVisibility(View.VISIBLE);
@@ -174,7 +157,10 @@ public class QuizActivity extends AppCompatActivity {
         startTime = System.currentTimeMillis();
         currentQuestionNum = 0;
         result = 0;
+        userAnswers.clear();
+        showingAnswers.clear();
         prepareQuestion();
+        nextButton.setText("Next");
     }
 
     private void saveUserAnswer() {
