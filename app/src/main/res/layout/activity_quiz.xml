@@ -86,6 +86,12 @@
             android:text="Prev"/>
 
         <Button
+            android:id="@+id/showAnswerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show answer"/>
+
+        <Button
             android:id="@+id/nextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

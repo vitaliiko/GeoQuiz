@@ -16,16 +16,18 @@ import com.example.user.geoquiz.model.Quiz;
 import com.example.user.geoquiz.model.QuizUtil;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class QuizActivity extends AppCompatActivity {
 
     private Quiz quiz;
-    private List<Question> questions;
     private int currentQuestionNum = 0;
+    private List<Question> questions;
+    private Set<Integer> showingAnswers = new HashSet<>();
     private Map<Integer, Integer> userAnswers = new HashMap<>();
-    private Map<Integer, Integer> showingAnswers = new HashMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class QuizActivity extends AppCompatActivity {
         prepareQuizInfo();
         addListenerOnStartButton();
         addListenerOnNavigationButtons();
+        addListenerOnShowAnswerButton();
     }
 
     private void addListenerOnStartButton() {
@@ -72,7 +75,7 @@ public class QuizActivity extends AppCompatActivity {
                 if (nextButton.getText().toString().equals("Next")) {
                     saveUserAnswer();
                     currentQuestionNum++;
-                    nextButton.setText(currentQuestionNum == quiz.getQuestions().size() - 1 ? "Done" : "Next");
+                    nextButton.setText(currentQuestionNum == questions.size() - 1 ? "Done" : "Next");
                     prevButton.setEnabled(currentQuestionNum > 0);
                     prepareQuestion();
                 }
@@ -84,7 +87,23 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 currentQuestionNum--;
                 nextButton.setText("Next");
+                prevButton.setEnabled(currentQuestionNum > 0);
                 prepareQuestion();
+            }
+        });
+    }
+
+    private void addListenerOnShowAnswerButton() {
+        Button button = (Button) findViewById(R.id.showAnswerButton);
+        assert button != null;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int rightAnswer = questions.get(currentQuestionNum).getRightAnswer();
+                RadioButton radioButton = (RadioButton) findViewById(rightAnswer);
+                assert radioButton != null;
+                radioButton.setChecked(true);
+                showingAnswers.add(currentQuestionNum);
             }
         });
     }
@@ -119,6 +138,11 @@ public class QuizActivity extends AppCompatActivity {
 
     private void prepareQuestion() {
         Question question = questions.get(currentQuestionNum);
+        String userAnswer = null;
+        Integer userAnswerNum = userAnswers.get(currentQuestionNum);
+        if (userAnswerNum != null && question.getAnswers().size() > userAnswerNum) {
+            userAnswer = question.getAnswers().get(userAnswerNum);
+        }
 
         TextView currentQuestionNum = (TextView) findViewById(R.id.currentQuestionNum);
         assert currentQuestionNum != null;
@@ -138,6 +162,10 @@ public class QuizActivity extends AppCompatActivity {
         for (String answer : question.getAnswers()) {
             RadioButton button = new RadioButton(this);
             button.setText(answer);
+            button.setId(question.getAnswers().indexOf(answer));
+            button.setChecked(userAnswer != null
+                    && userAnswers.containsKey(this.currentQuestionNum)
+                    && answer.equals(userAnswer));
             answersGroup.addView(button);
         }
     }
