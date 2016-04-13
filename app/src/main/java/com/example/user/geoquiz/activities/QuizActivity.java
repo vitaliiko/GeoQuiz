@@ -51,6 +51,7 @@ public class QuizActivity extends AppCompatActivity {
         addListenerOnShowAnswerButton();
         addListenerOnTryAgainButton();
         addListenerOnMainMenuButton();
+        addListenerOnResetButton();
     }
 
     private void addListenerOnStartButton() {
@@ -147,6 +148,19 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void addListenerOnResetButton() {
+        Button button = (Button) findViewById(R.id.resetButton);
+        assert button != null;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quiz.setAttempts(0);
+                quiz.setBestResult(0);
+                QuizUtil.saveQuiz(quiz, context);
             }
         });
     }
