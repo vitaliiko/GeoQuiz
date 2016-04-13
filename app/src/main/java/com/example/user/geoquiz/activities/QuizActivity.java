@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.example.user.geoquiz.R;
 import com.example.user.geoquiz.model.Question;
 import com.example.user.geoquiz.model.Quiz;
+import com.example.user.geoquiz.model.QuizUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,14 +22,19 @@ import java.util.Map;
 public class QuizActivity extends AppCompatActivity {
 
     private Quiz quiz;
+    private List<Question> questions;
     private int currentQuestionNum = 0;
     private Map<Integer, Integer> userAnswers = new HashMap<>();
+    private Map<Integer, Integer> showingAnswers = new HashMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
         quiz = (Quiz) getIntent().getSerializableExtra("quiz");
+        questions = QuizUtil.getRandomQuestions(5, quiz.getQuestions());
+
         prepareQuizInfo();
         addListenerOnStartButton();
         addListenerOnNavigationButtons();
@@ -65,7 +70,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (nextButton.getText().toString().equals("Next")) {
-                    checkResult();
+                    saveUserAnswer();
                     currentQuestionNum++;
                     nextButton.setText(currentQuestionNum == quiz.getQuestions().size() - 1 ? "Done" : "Next");
                     prevButton.setEnabled(currentQuestionNum > 0);
@@ -84,7 +89,7 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-    private void checkResult() {
+    private void saveUserAnswer() {
         RadioGroup answersRadioGroup = (RadioGroup) findViewById(R.id.answersRadioGroup);
         assert answersRadioGroup != null;
 
@@ -113,7 +118,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void prepareQuestion() {
-        Question question = quiz.getQuestions().get(currentQuestionNum);
+        Question question = questions.get(currentQuestionNum);
 
         TextView currentQuestionNum = (TextView) findViewById(R.id.currentQuestionNum);
         assert currentQuestionNum != null;
@@ -121,7 +126,7 @@ public class QuizActivity extends AppCompatActivity {
 
         TextView questionsCount = (TextView) findViewById(R.id.questionsCount);
         assert questionsCount != null;
-        questionsCount.setText(Integer.toString(quiz.getQuestions().size()));
+        questionsCount.setText(Integer.toString(questions.size()));
 
         TextView questionText = (TextView) findViewById(R.id.questionText);
         assert questionText != null;

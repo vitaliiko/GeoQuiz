@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.user.geoquiz.R;
-import com.example.user.geoquiz.model.QuizProvider;
+import com.example.user.geoquiz.model.QuizUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, QuizActivity.class);
-                intent.putExtra("quiz", QuizProvider.prepareQuiz());
+                intent.putExtra("quiz", QuizUtil.prepareQuiz());
                 startActivity(intent);
             }
         });
