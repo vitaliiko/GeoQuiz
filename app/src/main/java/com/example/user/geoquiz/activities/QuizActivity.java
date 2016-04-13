@@ -1,5 +1,7 @@
 package com.example.user.geoquiz.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,19 +25,23 @@ import java.util.Set;
 
 public class QuizActivity extends AppCompatActivity {
 
+    private Context context = this;
     private Quiz quiz;
-    private int result = 0;
+    private int result;
     private long startTime;
-    private int currentQuestionNum = 0;
+    private int currentQuestionNum;
     private List<Question> questions;
     private Set<Integer> showingAnswers = new HashSet<>();
     private Map<Integer, Integer> userAnswers = new HashMap<>();
+
+    private Button nextButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        nextButton = (Button) findViewById(R.id.nextButton);
         quiz = QuizUtil.loadQuiz(this);
         questions = QuizUtil.getRandomQuestions(quiz.getQuestions());
 
@@ -43,6 +49,8 @@ public class QuizActivity extends AppCompatActivity {
         addListenerOnStartButton();
         addListenerOnNavigationButtons();
         addListenerOnShowAnswerButton();
+        addListenerOnTryAgainButton();
+        addListenerOnMainMenuButton();
     }
 
     private void addListenerOnStartButton() {
@@ -55,21 +63,12 @@ public class QuizActivity extends AppCompatActivity {
                 assert startLayout != null;
                 startLayout.setVisibility(View.GONE);
 
-                ViewGroup questionLayout = (ViewGroup) findViewById(R.id.questionLayout);
-                assert questionLayout != null;
-                questionLayout.setVisibility(View.VISIBLE);
-
-                prepareQuestion();
-                quiz.addAttempt();
-                startTime = System.currentTimeMillis();
+                startQuiz();
             }
         });
     }
 
     private void addListenerOnNavigationButtons() {
-        final Button nextButton = (Button) findViewById(R.id.nextButton);
-        assert nextButton != null;
-
         final Button prevButton = (Button) findViewById(R.id.prevButton);
         assert prevButton != null;
 
@@ -122,6 +121,46 @@ public class QuizActivity extends AppCompatActivity {
                 showingAnswers.add(currentQuestionNum);
             }
         });
+    }
+
+    private void addListenerOnTryAgainButton() {
+        Button button = (Button) findViewById(R.id.tryAgainButton);
+        assert button != null;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewGroup resultLayout = (ViewGroup) findViewById(R.id.resultLayout);
+                assert resultLayout != null;
+                resultLayout.setVisibility(View.GONE);
+
+                startQuiz();
+                nextButton.setText("Next");
+            }
+        });
+    }
+
+    private void addListenerOnMainMenuButton() {
+        Button button = (Button) findViewById(R.id.mainMenuButton);
+        assert button != null;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void startQuiz() {
+        ViewGroup questionLayout = (ViewGroup) findViewById(R.id.questionLayout);
+        assert questionLayout != null;
+        questionLayout.setVisibility(View.VISIBLE);
+
+        quiz.addAttempt();
+        startTime = System.currentTimeMillis();
+        currentQuestionNum = 0;
+        result = 0;
+        prepareQuestion();
     }
 
     private void saveUserAnswer() {
