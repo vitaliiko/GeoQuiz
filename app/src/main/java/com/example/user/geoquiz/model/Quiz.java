@@ -10,6 +10,7 @@ public class Quiz implements Serializable {
     private List<Question> questions;
     private int attempts = 0;
     private int bestResult = 0;
+    private int lastResult = 0;
 
     public Quiz(String name, String description, List<Question> questions) {
         this.name = name;
@@ -55,5 +56,17 @@ public class Quiz implements Serializable {
 
     public void setBestResult(int bestResult) {
         this.bestResult = bestResult;
+    }
+
+    public int getLastResult() {
+        return lastResult;
+    }
+
+    public void setLastResult(int lastResult) {
+        this.lastResult = lastResult;
+    }
+
+    public void addAttempt() {
+        attempts++;
     }
 }

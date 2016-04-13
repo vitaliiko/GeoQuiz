@@ -24,6 +24,8 @@ import java.util.Set;
 public class QuizActivity extends AppCompatActivity {
 
     private Quiz quiz;
+    private int result = 0;
+    private long startTime;
     private int currentQuestionNum = 0;
     private List<Question> questions;
     private Set<Integer> showingAnswers = new HashSet<>();
@@ -35,7 +37,7 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         quiz = (Quiz) getIntent().getSerializableExtra("quiz");
-        questions = QuizUtil.getRandomQuestions(5, quiz.getQuestions());
+        questions = QuizUtil.getRandomQuestions(quiz.getQuestions());
 
         prepareQuizInfo();
         addListenerOnStartButton();
@@ -58,6 +60,8 @@ public class QuizActivity extends AppCompatActivity {
                 questionLayout.setVisibility(View.VISIBLE);
 
                 prepareQuestion();
+                quiz.addAttempt();
+                startTime = System.currentTimeMillis();
             }
         });
     }
@@ -78,6 +82,18 @@ public class QuizActivity extends AppCompatActivity {
                     nextButton.setText(currentQuestionNum == questions.size() - 1 ? "Done" : "Next");
                     prevButton.setEnabled(currentQuestionNum > 0);
                     prepareQuestion();
+                } else {
+                    saveUserAnswer();
+                    getResult();
+                    prepareResultInfo();
+
+                    ViewGroup questionLayout = (ViewGroup) findViewById(R.id.questionLayout);
+                    assert questionLayout != null;
+                    questionLayout.setVisibility(View.GONE);
+
+                    ViewGroup resultLayout = (ViewGroup) findViewById(R.id.resultLayout);
+                    assert resultLayout != null;
+                    resultLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -168,5 +184,30 @@ public class QuizActivity extends AppCompatActivity {
                     && answer.equals(userAnswer));
             answersGroup.addView(button);
         }
+    }
+
+    private void getResult() {
+        for (Integer answer : showingAnswers) {
+            userAnswers.remove(answer);
+        }
+        result = QuizUtil.countRightAnswers(quiz, userAnswers);
+    }
+
+    private void prepareResultInfo() {
+        TextView message = (TextView) findViewById(R.id.message);
+        assert message != null;
+        message.setText(QuizUtil.generateMessage(result));
+
+        TextView result = (TextView) findViewById(R.id.result);
+        assert result != null;
+        result.setText(Integer.toString(this.result) + " of " + QuizUtil.QUESTIONS_COUNT);
+
+        TextView bestResult = (TextView) findViewById(R.id.bestResult);
+        assert bestResult != null;
+        bestResult.setText(Integer.toString(quiz.getBestResult()));
+
+        TextView spentTime = (TextView) findViewById(R.id.spentTime);
+        assert spentTime != null;
+        bestResult.setText(QuizUtil.countSpentTime(startTime));
     }
 }
