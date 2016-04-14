@@ -2,20 +2,26 @@ package com.example.user.geoquiz.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.user.geoquiz.R;
 import com.example.user.geoquiz.model.Question;
 import com.example.user.geoquiz.model.Quiz;
 import com.example.user.geoquiz.model.QuizUtil;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,6 +42,11 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button nextButton;
     private Button prevButton;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +59,9 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         setClickListeners();
         prepareQuizInfo();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -102,6 +116,10 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             getResult();
             prepareResultInfo();
 
+            ScrollView questionScroll = (ScrollView) findViewById(R.id.questionScroll);
+            assert questionScroll != null;
+            questionScroll.setVisibility(View.GONE);
+
             ViewGroup questionLayout = (ViewGroup) findViewById(R.id.questionLayout);
             assert questionLayout != null;
             questionLayout.setVisibility(View.GONE);
@@ -132,7 +150,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-    private void resetResults(){
+    private void resetResults() {
         quiz.setAttempts(0);
         quiz.setBestResult(0);
         QuizUtil.saveQuiz(quiz, context);
@@ -152,6 +170,10 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         ViewGroup questionLayout = (ViewGroup) findViewById(R.id.questionLayout);
         assert questionLayout != null;
         questionLayout.setVisibility(View.VISIBLE);
+
+        ScrollView questionScroll = (ScrollView) findViewById(R.id.questionScroll);
+        assert questionScroll != null;
+        questionScroll.setVisibility(View.VISIBLE);
 
         quiz.addAttempt();
         startTime = System.currentTimeMillis();
@@ -198,6 +220,10 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         if (userAnswerNum != null && question.getAnswers().size() > userAnswerNum) {
             userAnswer = question.getAnswers().get(userAnswerNum);
         }
+
+        ImageView image = (ImageView) findViewById(R.id.quizImage);
+        assert image != null;
+        image.setImageResource(question.getImage());
 
         TextView currentQuestionNum = (TextView) findViewById(R.id.currentQuestionNum);
         assert currentQuestionNum != null;

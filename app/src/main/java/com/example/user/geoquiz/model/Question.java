@@ -1,18 +1,30 @@
 package com.example.user.geoquiz.model;
 
+import android.media.Image;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class Question implements Serializable {
 
+    private int image;
     private String questionText;
     private List<String> answers;
     private int rightAnswer;
 
-    public Question(String questionText, List<String> answers, int rightAnswer) {
+    public Question(int image, String questionText, List<String> answers, int rightAnswer) {
+        this.image = image;
         this.questionText = questionText;
         this.answers = answers;
         this.rightAnswer = rightAnswer;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 
     public String getQuestionText() {

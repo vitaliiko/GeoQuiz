@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.user.geoquiz.R;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -42,16 +43,16 @@ public class QuizUtil {
 
     private static List<Question> getQuestions() {
         List<Question> questions = new ArrayList<>();
-        questions.add(new Question("Question1", getAnswers(4), 0));
-        questions.add(new Question("Question2", getAnswers(5), 2));
-        questions.add(new Question("Question3", getAnswers(3), 1));
-        questions.add(new Question("Question4", getAnswers(4), 3));
-        questions.add(new Question("Question5", getAnswers(3), 2));
-        questions.add(new Question("Question6", getAnswers(4), 0));
-        questions.add(new Question("Question7", getAnswers(5), 2));
-        questions.add(new Question("Question8", getAnswers(3), 1));
-        questions.add(new Question("Question9", getAnswers(4), 3));
-        questions.add(new Question("Question10", getAnswers(3), 2));
+        questions.add(new Question(R.drawable.image1, "Question1", getAnswers(4), 0));
+        questions.add(new Question(R.drawable.image2, "Question2", getAnswers(5), 2));
+        questions.add(new Question(R.drawable.image3, "Question3", getAnswers(3), 1));
+        questions.add(new Question(R.drawable.image4, "Question4", getAnswers(4), 3));
+        questions.add(new Question(R.drawable.image5, "Question5", getAnswers(3), 2));
+        questions.add(new Question(R.drawable.image6, "Question6", getAnswers(4), 0));
+        questions.add(new Question(R.drawable.image7, "Question7", getAnswers(5), 2));
+        questions.add(new Question(R.drawable.image8, "Question8", getAnswers(3), 1));
+        questions.add(new Question(R.drawable.image9, "Question9", getAnswers(4), 3));
+        questions.add(new Question(R.drawable.image10, "Question10", getAnswers(3), 2));
         return questions;
     }
 
