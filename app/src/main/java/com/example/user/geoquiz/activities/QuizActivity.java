@@ -318,7 +318,7 @@ public class QuizActivity
     }
 
     private void getResult() {
-        result = QuizUtil.countRightAnswers(quiz, userAnswers);
+        result = QuizUtil.countRightAnswers(quiz, questions, userAnswers);
         QuizUtil.saveQuiz(quiz, this);
     }
 

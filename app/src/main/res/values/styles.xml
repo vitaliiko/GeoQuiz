@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Primary theme color of the app (sets background color of app bar) -->
-        <item name="colorPrimary">#FF9800</item>
+        <item name="colorPrimary">#90CAF9</item>
         <!-- Background color of buttons in the app -->
-        <item name="colorButtonNormal">#FF9800</item>
+        <item name="colorButtonNormal">#90CAF9</item>
     </style>
 
     <style name="QuizActivityButtonsStyle">
@@ -14,6 +14,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_gravity">bottom</item>
         <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextViewStyle">
@@ -28,6 +29,7 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-medium</item>
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
     </style>
 
     <style name="ResultTextStyle">

@@ -51,10 +51,12 @@ public class QuizUtil {
         return new ArrayList<>(questionsSet);
     }
 
-    public static int countRightAnswers(Quiz quiz, Map<Integer, Integer> userAnswers) {
+    public static int countRightAnswers(Quiz quiz, List<Question> questions, Map<Integer, Integer> userAnswers) {
         int result = 0;
         for (Integer questionNum : userAnswers.keySet()) {
-            if (quiz.getQuestions().get(questionNum).getRightAnswer() == userAnswers.get(questionNum)) {
+            Integer rightAnswer = questions.get(questionNum).getRightAnswer();
+            Integer userAnswer = userAnswers.get(questionNum);
+            if (rightAnswer.equals(userAnswer)) {
                 result++;
             }
         }
