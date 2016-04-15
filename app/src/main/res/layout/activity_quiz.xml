@@ -7,80 +7,72 @@
         android:id="@+id/startLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/quizName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/quizDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/quizName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Attempts made: "/>
 
             <TextView
-                android:id="@+id/quizDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/quizAttempts"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="Attempts made: "/>
-
-                <TextView
-                    android:id="@+id/quizAttempts"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="Best result: "/>
-
-                <TextView
-                    android:id="@+id/quizBestResult"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left"/>
-
-            </LinearLayout>
+                android:layout_weight="1"
+                android:gravity="left" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Best result: "/>
+
+            <TextView
+                android:id="@+id/quizBestResult"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom">
 
             <Button
                 android:id="@+id/resetButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="bottom"
                 android:text="Reset"/>
 
             <Button
@@ -88,6 +80,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="bottom"
                 android:text="Start"/>
 
         </LinearLayout>
@@ -104,12 +97,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/currentQuestionNum"
@@ -191,28 +185,36 @@
 
             </RadioGroup>
 
-            <Button
-                android:id="@+id/prevButton"
-                style="@style/ButtonStyle"
-                android:enabled="false"
-                android:text="Prev"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom">
 
-            <Button
-                android:id="@+id/showAnswerButton"
-                style="@style/ButtonStyle"
-                android:enabled="false"
-                android:text="Show answer"/>
+                <Button
+                    android:id="@+id/prevButton"
+                    style="@style/QuestionButtonsStyle"
+                    android:enabled="false"
+                    android:text="Prev"/>
 
-            <Button
-                android:id="@+id/completeButton"
-                style="@style/ButtonStyle"
-                android:visibility="gone"
-                android:text="Done!"/>
+                <Button
+                    android:id="@+id/showAnswerButton"
+                    style="@style/QuestionButtonsStyle"
+                    android:enabled="false"
+                    android:text="Show answer"/>
 
-            <Button
-                android:id="@+id/nextButton"
-                style="@style/ButtonStyle"
-                android:text="Next"/>
+                <Button
+                    android:id="@+id/completeButton"
+                    style="@style/QuestionButtonsStyle"
+                    android:visibility="gone"
+                    android:text="Done!"/>
+
+                <Button
+                    android:id="@+id/nextButton"
+                    style="@style/QuestionButtonsStyle"
+                    android:text="Next"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -220,9 +222,9 @@
 
     <LinearLayout
         android:id="@+id/resultLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <TextView
@@ -230,30 +232,91 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/result"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/bestResult"
+            <TextView
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Result: "/>
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/spentTime"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Best result: "/>
+
+            <TextView
+                android:id="@+id/bestResult"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/tryAgainButton"
-            style="@style/ButtonStyle"
-            android:text="Try again"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Spent time: "/>
 
-        <Button
-            android:id="@+id/mainMenuButton"
-            style="@style/ButtonStyle"
-            android:text="Main menu"/>
+            <TextView
+                android:id="@+id/spentTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom">
+
+            <Button
+                android:id="@+id/tryAgainButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:text="Try again"/>
+
+            <Button
+                android:id="@+id/mainMenuButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:text="Main menu"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
