@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,27 +7,79 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.MainActivity"
+    android:background="#E0E0E0"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/quiz1"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/architecturalQuiz"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:clickable="true">
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dip"
+        android:background="#ffffff"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:id="@+id/architecturalImage"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/image1" />
 
         <TextView
-            android:id="@+id/quizName"
+            android:id="@+id/architecturalTitle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/architecturalImage"
+            android:layout_alignTop="@+id/architecturalImage"
+            style="@style/HeaderFontStyle"
             android:text="Quiz1"/>
 
         <TextView
-            android:id="@+id/attempts"
+            android:id="@+id/architecturalDesc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Attempts: 0"/>
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/architecturalImage"
+            android:layout_below="@+id/architecturalTitle"
+            style="@style/QuestionTextStyle"
+            android:text="description"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/modernBuildingsQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dip"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/modernBuildingsImage"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/image12" />
+
+        <TextView
+            android:id="@+id/modernBuildingsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/modernBuildingsImage"
+            android:layout_alignTop="@+id/modernBuildingsImage"
+            style="@style/HeaderFontStyle"
+            android:text="Quiz1"/>
+
+        <TextView
+            android:id="@+id/modernBuildingsDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/modernBuildingsImage"
+            android:layout_below="@+id/modernBuildingsTitle"
+            style="@style/QuestionTextStyle"
+            android:text="description"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
