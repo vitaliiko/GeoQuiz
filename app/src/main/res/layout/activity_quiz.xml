@@ -69,18 +69,16 @@
 
             <Button
                 android:id="@+id/resetButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
+                style="@style/QuizActivityButtonsStyle"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="4dp"
                 android:text="Reset"/>
 
             <Button
                 android:id="@+id/startButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
+                style="@style/QuizActivityButtonsStyle"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="16dp"
                 android:text="Start"/>
 
         </LinearLayout>
@@ -193,25 +191,29 @@
 
                 <Button
                     android:id="@+id/prevButton"
-                    style="@style/QuestionButtonsStyle"
+                    style="@style/QuizActivityButtonsStyle"
                     android:enabled="false"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="8dp"
                     android:text="Prev"/>
 
                 <Button
                     android:id="@+id/showAnswerButton"
-                    style="@style/QuestionButtonsStyle"
+                    style="@style/QuizActivityButtonsStyle"
                     android:enabled="false"
                     android:text="Show answer"/>
 
                 <Button
                     android:id="@+id/completeButton"
-                    style="@style/QuestionButtonsStyle"
+                    style="@style/QuizActivityButtonsStyle"
                     android:visibility="gone"
                     android:text="Done!"/>
 
                 <Button
                     android:id="@+id/nextButton"
-                    style="@style/QuestionButtonsStyle"
+                    style="@style/QuizActivityButtonsStyle"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"
                     android:text="Next"/>
 
             </LinearLayout>
@@ -302,18 +304,15 @@
 
             <Button
                 android:id="@+id/tryAgainButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
+                style="@style/QuizActivityButtonsStyle"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="8dp"
                 android:text="Try again"/>
 
             <Button
                 android:id="@+id/mainMenuButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
+                style="@style/QuizActivityButtonsStyle"
+                android:layout_marginRight="16dp"
                 android:text="Main menu"/>
 
         </LinearLayout>
