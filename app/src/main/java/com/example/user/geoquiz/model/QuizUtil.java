@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.user.geoquiz.R;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -19,11 +18,6 @@ public class QuizUtil {
 
     public static final int QUESTIONS_COUNT = 5;
 
-    public static void prepareQuiz(Context context) {
-        Quiz quiz = new Quiz("Quiz", "sdsdfs sdfsdf sdfsdf", getQuestions());
-        saveQuiz(quiz, context);
-    }
-
     public static void saveQuiz(Quiz quiz, Context context) {
         SharedPreferences appSharedPrefs =
                 PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
@@ -34,34 +28,10 @@ public class QuizUtil {
         prefsEditor.apply();
     }
 
-    public static Quiz loadQuiz(Context context) {
-        SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        String json = preferences.getString("quiz", "");
-        return new Gson().fromJson(json, Quiz.class);
-    }
-
-    private static List<Question> getQuestions() {
-        List<Question> questions = new ArrayList<>();
-        questions.add(new Question(R.drawable.image1, "description", "Question1", getAnswers(4), 0));
-        questions.add(new Question(R.drawable.image2, "description", "Question2", getAnswers(5), 0));
-        questions.add(new Question(R.drawable.image3, "description", "Question3", getAnswers(3), 0));
-        questions.add(new Question(R.drawable.image4, "description", "Question4", getAnswers(4), 0));
-        questions.add(new Question(R.drawable.image5, "description", "Question5", getAnswers(3), 0));
-        questions.add(new Question(R.drawable.image6, "description", "Question6", getAnswers(4), 0));
-        questions.add(new Question(R.drawable.image7, "description", "Question7", getAnswers(5), 0));
-        questions.add(new Question(R.drawable.image8, "description", "Question8", getAnswers(3), 0));
-        questions.add(new Question(R.drawable.image9, "description", "Question9", getAnswers(4), 0));
-        questions.add(new Question(R.drawable.image10, "description", "Question10", getAnswers(3), 0));
-        return questions;
-    }
-
-    private static List<String> getAnswers(int count) {
-        List<String> answers = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            answers.add("answer" + i);
-        }
-        return answers;
+    public static Quiz loadQuiz(Context context, int resourceFileId) {
+        Quiz quiz = new Quiz();
+        quiz.setQuestions(ContentLoader.loadContent(context, resourceFileId));
+        return quiz;
     }
 
     public static List<Question> getRandomQuestions(List<Question> questionsList) {

@@ -56,6 +56,8 @@ public class QuizActivity
     private LinearLayout startLayout;
     private LinearLayout questionLayout;
     private LinearLayout resultLayout;
+    private LinearLayout userAnswerLayout;
+    private LinearLayout rightAnswerLayout;
     private ScrollView questionScroll;
 
     @Override
@@ -65,7 +67,7 @@ public class QuizActivity
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         initViewsVariables();
-        quiz = QuizUtil.loadQuiz(this);
+        quiz = (Quiz) getIntent().getSerializableExtra("quiz");
 
         setListeners();
         prepareQuizInfo();
@@ -77,8 +79,8 @@ public class QuizActivity
         showAnswerButton = (Button) findViewById(R.id.showAnswerButton);
         completeButton = (Button) findViewById(R.id.completeButton);
 
-        userAnswerText = (TextView) findViewById(R.id.userAnswer);
-        rightAnswerText = (TextView) findViewById(R.id.rightAnswer);
+        userAnswerText = (TextView) findViewById(R.id.userAnswerText);
+        rightAnswerText = (TextView) findViewById(R.id.rightAnswerText);
         questionText = (TextView) findViewById(R.id.questionText);
         currentQuestionNumText = (TextView) findViewById(R.id.currentQuestionNum);
         questionsCountText = (TextView) findViewById(R.id.questionsCount);
@@ -89,6 +91,8 @@ public class QuizActivity
         resultLayout = (LinearLayout) findViewById(R.id.resultLayout);
         startLayout = (LinearLayout) findViewById(R.id.startLayout);
         questionLayout = (LinearLayout) findViewById(R.id.questionLayout);
+        userAnswerLayout = (LinearLayout) findViewById(R.id.userAnswerLayout);
+        rightAnswerLayout = (LinearLayout) findViewById(R.id.rightAnswerLayout);
         questionScroll = (ScrollView) findViewById(R.id.questionScroll);
     }
 
@@ -144,6 +148,7 @@ public class QuizActivity
         findViewById(R.id.tryAgainButton).setOnClickListener(this);
         findViewById(R.id.mainMenuButton).setOnClickListener(this);
         findViewById(R.id.resetButton).setOnClickListener(this);
+
         nextButton.setOnClickListener(this);
         prevButton.setOnClickListener(this);
         showAnswerButton.setOnClickListener(this);
@@ -193,9 +198,9 @@ public class QuizActivity
         if (userAnswerNum != null) {
             String userAnswer = question.getAnswers().get(userAnswerNum);
             userAnswerText.setText(userAnswer);
-            userAnswerText.setVisibility(View.VISIBLE);
+            userAnswerLayout.setVisibility(View.VISIBLE);
             rightAnswerText.setText(question.getRightAnswerText());
-            rightAnswerText.setVisibility(View.VISIBLE);
+            rightAnswerLayout.setVisibility(View.VISIBLE);
 
             questionText.setText(question.getImageDescription());
             if (userAnswer.equals(question.getRightAnswerText())) {
@@ -281,8 +286,8 @@ public class QuizActivity
             userAnswer = question.getAnswers().get(userAnswerNum);
         }
         if (!showingAnswers.contains(currentQuestionNum)) {
-            userAnswerText.setVisibility(View.GONE);
-            rightAnswerText.setVisibility(View.GONE);
+            userAnswerLayout.setVisibility(View.GONE);
+            rightAnswerLayout.setVisibility(View.GONE);
             questionText.setText(question.getQuestionText());
 
             for (String answer : question.getAnswers()) {
@@ -298,10 +303,10 @@ public class QuizActivity
                 answersRadioGroup.addView(button);
             }
         } else {
-            userAnswerText.setVisibility(View.VISIBLE);
             userAnswerText.setText(userAnswer);
-            rightAnswerText.setVisibility(View.VISIBLE);
+            userAnswerLayout.setVisibility(View.VISIBLE);
             rightAnswerText.setText(question.getRightAnswerText());
+            rightAnswerLayout.setVisibility(View.VISIBLE);
 
             questionText.setText(question.getImageDescription());
             if (userAnswer.equals(question.getRightAnswerText())) {

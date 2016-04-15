@@ -12,6 +12,8 @@ public class Quiz implements Serializable {
     private int bestResult = 0;
     private int lastResult = 0;
 
+    public Quiz() {}
+
     public Quiz(String name, String description, List<Question> questions) {
         this.name = name;
         this.description = description;

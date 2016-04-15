@@ -1,6 +1,7 @@
 package com.example.user.geoquiz.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Question implements Serializable {
@@ -8,21 +9,15 @@ public class Question implements Serializable {
     private int image;
     private String imageDescription;
     private String questionText;
-    private List<String> answers;
+    private List<String> answers = new ArrayList<>();
     private int rightAnswer;
 
-    public Question(int image, String questionText, List<String> answers, int rightAnswer) {
-        this.image = image;
-        this.questionText = questionText;
-        this.answers = answers;
-        this.rightAnswer = rightAnswer;
-    }
+    public Question() {}
 
-    public Question(int image, String imageDescription, String questionText, List<String> answers, int rightAnswer) {
+    public Question(int image, String imageDescription, String questionText, int rightAnswer) {
         this.image = image;
         this.imageDescription = imageDescription;
         this.questionText = questionText;
-        this.answers = answers;
         this.rightAnswer = rightAnswer;
     }
 
@@ -68,5 +63,9 @@ public class Question implements Serializable {
 
     public String getRightAnswerText() {
         return answers.get(rightAnswer);
+    }
+
+    public void copyAnswers(List<String> answers) {
+        this.answers.addAll(answers);
     }
 }

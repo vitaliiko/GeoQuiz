@@ -1,48 +1,45 @@
 package com.example.user.geoquiz.model;
 
 import android.content.Context;
-import android.os.Environment;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContentLoader {
 
-   private static String loadFromFile(String fileName) {
-       File sdcard = Environment.getExternalStorageDirectory();
-       File file = new File(sdcard, fileName);
+   private static String loadFromFile(Context context, int fileId) {
        StringBuilder text = new StringBuilder();
+       InputStream is = context.getResources().openRawResource(fileId);
+       BufferedReader br = new BufferedReader(new InputStreamReader(is));
+       String readLine;
        try {
-           BufferedReader br = new BufferedReader(new FileReader(file));
-           String line;
-           while ((line = br.readLine()) != null) {
-               text.append(line);
-               text.append('\n');
+           while ((readLine = br.readLine()) != null) {
+               text.append(readLine).append("\n");
            }
-           br.close();
-       }
-       catch (IOException e) {
+       } catch (IOException e) {
            e.printStackTrace();
        }
        return text.toString();
    }
 
-    public static List<Question> loadContent(Context context, String quizFileName) {
+    public static List<Question> loadContent(Context context, int quizFileId) {
         List<Question> questions = new ArrayList<>();
+        String questionText = "Where this building is located?";
         String imageName = null;
-        String questionText = null;
+        String imageDescription = null;
         List<String> answers = new ArrayList<>();
         Integer rightAnswer = null;
         int i = 0;
-        for (String s : loadFromFile(quizFileName).split("\r\n")) {
+        String resource = loadFromFile(context, quizFileId);
+        for (String s : resource.split("\n")) {
             if (!s.equals("***")) {
                 if (imageName == null) {
                     imageName = s;
-                } else if (questionText == null) {
-                    questionText = s;
+                } else if (imageDescription == null) {
+                    imageDescription = s;
                 } else {
                     String answer = s;
                     if (s.startsWith("*")) {
@@ -57,9 +54,11 @@ public class ContentLoader {
                         .getResources()
                         .getIdentifier(imageName, "drawable", context.getPackageName());
 
-                questions.add(new Question(imageId, questionText, answers, rightAnswer));
+                Question question = new Question(imageId, imageDescription, questionText, rightAnswer);
+                question.copyAnswers(answers);
+                questions.add(question);
                 imageName = null;
-                questionText = null;
+                imageDescription = null;
                 answers.clear();
                 i = 0;
             }
