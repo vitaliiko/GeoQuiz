@@ -65,4 +65,8 @@ public class Question implements Serializable {
     public void setRightAnswer(int rightAnswer) {
         this.rightAnswer = rightAnswer;
     }
+
+    public String getRightAnswerText() {
+        return answers.get(rightAnswer);
+    }
 }

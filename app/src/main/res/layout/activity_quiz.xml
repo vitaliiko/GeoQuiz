@@ -89,6 +89,18 @@
                 android:contentDescription="" />
 
             <TextView
+                android:id="@+id/userAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/rightAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"/>
+
+            <TextView
                 android:id="@+id/questionText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -111,6 +123,7 @@
                 android:id="@+id/showAnswerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:text="Show answer"/>
 
             <Button

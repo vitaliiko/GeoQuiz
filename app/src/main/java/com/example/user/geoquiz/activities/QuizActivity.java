@@ -2,17 +2,17 @@ package com.example.user.geoquiz.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.user.geoquiz.R;
@@ -20,13 +20,16 @@ import com.example.user.geoquiz.model.Question;
 import com.example.user.geoquiz.model.Quiz;
 import com.example.user.geoquiz.model.QuizUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
+public class QuizActivity
+        extends AppCompatActivity
+        implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private Context context = this;
     private Quiz quiz;
@@ -39,6 +42,14 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button nextButton;
     private Button prevButton;
+    private Button showAnswerButton;
+    private TextView userAnswerText;
+    private TextView rightAnswerText;
+    private TextView questionText;
+    private RadioGroup answersRadioGroup;
+    private ImageView image;
+    private TextView currentQuestionNumText;
+    private TextView questionsCountText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +58,15 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         nextButton = (Button) findViewById(R.id.nextButton);
         prevButton = (Button) findViewById(R.id.prevButton);
+        showAnswerButton = (Button) findViewById(R.id.showAnswerButton);
+        userAnswerText = (TextView) findViewById(R.id.userAnswer);
+        rightAnswerText = (TextView) findViewById(R.id.rightAnswer);
+        questionText = (TextView) findViewById(R.id.questionText);
+        answersRadioGroup = (RadioGroup) findViewById(R.id.answersRadioGroup);
+        image = (ImageView) findViewById(R.id.quizImage);
+        currentQuestionNumText = (TextView) findViewById(R.id.currentQuestionNum);
+        questionsCountText = (TextView) findViewById(R.id.questionsCount);
+
         quiz = QuizUtil.loadQuiz(this);
 
         setClickListeners();
@@ -84,49 +104,65 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        int answerId = answersRadioGroup.getCheckedRadioButtonId();
+        showAnswerButton.setEnabled(answerId > -1);
+    }
+
     private void setClickListeners() {
         findViewById(R.id.startButton).setOnClickListener(this);
         findViewById(R.id.tryAgainButton).setOnClickListener(this);
-        findViewById(R.id.nextButton).setOnClickListener(this);
-        findViewById(R.id.prevButton).setOnClickListener(this);
         findViewById(R.id.mainMenuButton).setOnClickListener(this);
         findViewById(R.id.resetButton).setOnClickListener(this);
+        nextButton.setOnClickListener(this);
+        prevButton.setOnClickListener(this);
+        showAnswerButton.setOnClickListener(this);
+        answersRadioGroup.setOnCheckedChangeListener(this);
     }
 
     private void nextQuestion() {
-        if (nextButton.getText().toString().equals("Next")) {
-            saveUserAnswer();
-            currentQuestionNum++;
-            nextButton.setText(currentQuestionNum == questions.size() - 1 ? "Done" : "Next");
-            prevButton.setEnabled(currentQuestionNum > 0);
-            prepareQuestion();
+        saveUserAnswer();
+        if (currentQuestionNum == questions.size() - 1) {
+            currentQuestionNum = 0;
         } else {
-            saveUserAnswer();
-            getResult();
-            prepareResultInfo();
-
-            View questionScroll = findViewById(R.id.questionScroll);
-            questionScroll.setVisibility(View.GONE);
-
-            View questionLayout = findViewById(R.id.questionLayout);
-            questionLayout.setVisibility(View.GONE);
-
-            View resultLayout = findViewById(R.id.resultLayout);
-            resultLayout.setVisibility(View.VISIBLE);
+            currentQuestionNum++;
         }
+        prevButton.setEnabled(true);
+        prepareQuestion();
+        showAnswerButton.setEnabled(false);
     }
 
     private void prevQuestion() {
-        currentQuestionNum--;
-        nextButton.setText("Next");
-        prevButton.setEnabled(currentQuestionNum > 0);
+        if (currentQuestionNum == 0) {
+            currentQuestionNum = questions.size() - 1;
+        } else {
+            currentQuestionNum--;
+        }
         prepareQuestion();
+        showAnswerButton.setEnabled(false);
     }
 
     private void showRightAnswer() {
-        int rightAnswer = questions.get(currentQuestionNum).getRightAnswer();
-        RadioButton radioButton = (RadioButton) findViewById(rightAnswer);
-        radioButton.setChecked(true);
+        saveUserAnswer();
+        Question question = questions.get(currentQuestionNum);
+        answersRadioGroup.removeAllViews();
+        showAnswerButton.setEnabled(false);
+
+        Integer userAnswerNum = userAnswers.get(currentQuestionNum);
+        String userAnswer = question.getAnswers().get(userAnswerNum);
+        userAnswerText.setText(userAnswer);
+        userAnswerText.setVisibility(View.VISIBLE);
+        rightAnswerText.setText(question.getRightAnswerText());
+        rightAnswerText.setVisibility(View.VISIBLE);
+
+        questionText.setText(question.getImageDescription());
+        if (userAnswer.equals(question.getRightAnswerText())) {
+            userAnswerText.setTextColor(Color.GREEN);
+        } else {
+            userAnswerText.setTextColor(Color.RED);
+        }
+
         showingAnswers.add(currentQuestionNum);
     }
 
@@ -167,9 +203,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void saveUserAnswer() {
-        RadioGroup answersRadioGroup = (RadioGroup) findViewById(R.id.answersRadioGroup);
-        assert answersRadioGroup != null;
-
         int answerId = answersRadioGroup.getCheckedRadioButtonId();
         if (answerId > -1) {
             userAnswers.put(currentQuestionNum, answerId);
@@ -177,50 +210,63 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void prepareQuizInfo() {
-        TextView quizName = (TextView) findViewById(R.id.quizName);
-        quizName.setText(quiz.getName());
+        TextView quizNameText = (TextView) findViewById(R.id.quizName);
+        quizNameText.setText(quiz.getName());
 
-        TextView quizDescription = (TextView) findViewById(R.id.quizDescription);
-        quizDescription.setText(quiz.getDescription());
+        TextView quizDescriptionText = (TextView) findViewById(R.id.quizDescription);
+        quizDescriptionText.setText(quiz.getDescription());
 
-        TextView quizAttempts = (TextView) findViewById(R.id.quizAttempts);
-        quizAttempts.setText(Integer.toString(quiz.getAttempts()));
+        TextView quizAttemptsText = (TextView) findViewById(R.id.quizAttempts);
+        quizAttemptsText.setText(Integer.toString(quiz.getAttempts()));
 
-        TextView quizBestResult = (TextView) findViewById(R.id.quizBestResult);
-        quizBestResult.setText(Integer.toString(quiz.getBestResult()));
+        TextView quizBestResultText = (TextView) findViewById(R.id.quizBestResult);
+        quizBestResultText.setText(Integer.toString(quiz.getBestResult()));
     }
 
     private void prepareQuestion() {
         Question question = questions.get(currentQuestionNum);
+
+        image.setImageResource(question.getImage());
+        currentQuestionNumText.setText(Integer.toString(currentQuestionNum + 1));
+        questionsCountText.setText(Integer.toString(questions.size()));
+        answersRadioGroup.removeAllViews();
+
         String userAnswer = null;
         Integer userAnswerNum = userAnswers.get(currentQuestionNum);
         if (userAnswerNum != null && question.getAnswers().size() > userAnswerNum) {
             userAnswer = question.getAnswers().get(userAnswerNum);
         }
+        if (!showingAnswers.contains(currentQuestionNum)) {
+            userAnswerText.setVisibility(View.GONE);
+            rightAnswerText.setVisibility(View.GONE);
+            questionText.setText(question.getQuestionText());
 
-        ImageView image = (ImageView) findViewById(R.id.quizImage);
-        image.setImageResource(question.getImage());
+            for (String answer : question.getAnswers()) {
+                RadioButton button = new RadioButton(this);
+                button.setText(answer);
+                button.setId(question.getAnswers().indexOf(answer));
+                button.setChecked(userAnswer != null
+                        && userAnswers.containsKey(currentQuestionNum)
+                        && answer.equals(userAnswer));
+                answersRadioGroup.addView(button);
+            }
+        } else {
+            userAnswerText.setVisibility(View.VISIBLE);
+            userAnswerText.setText(userAnswer);
+            rightAnswerText.setVisibility(View.VISIBLE);
+            rightAnswerText.setText(question.getRightAnswerText());
 
-        TextView currentQuestionNum = (TextView) findViewById(R.id.currentQuestionNum);
-        currentQuestionNum.setText(Integer.toString(this.currentQuestionNum + 1));
-
-        TextView questionsCount = (TextView) findViewById(R.id.questionsCount);
-        questionsCount.setText(Integer.toString(questions.size()));
-
-        TextView questionText = (TextView) findViewById(R.id.questionText);
-        questionText.setText(question.getQuestionText());
-
-        RadioGroup answersGroup = (RadioGroup) findViewById(R.id.answersRadioGroup);
-        answersGroup.removeAllViews();
-        for (String answer : question.getAnswers()) {
-            RadioButton button = new RadioButton(this);
-            button.setText(answer);
-            button.setId(question.getAnswers().indexOf(answer));
-            button.setChecked(userAnswer != null
-                    && userAnswers.containsKey(this.currentQuestionNum)
-                    && answer.equals(userAnswer));
-            answersGroup.addView(button);
+            questionText.setText(question.getImageDescription());
+            if (userAnswer.equals(question.getRightAnswerText())) {
+                userAnswerText.setTextColor(Color.GREEN);
+            } else {
+                userAnswerText.setTextColor(Color.RED);
+            }
         }
+    }
+
+    private void showUserAndRightAnswers() {
+
     }
 
     private void getResult() {
@@ -232,16 +278,16 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void prepareResultInfo() {
-        TextView message = (TextView) findViewById(R.id.message);
-        message.setText(QuizUtil.generateMessage(result));
+        TextView messageText = (TextView) findViewById(R.id.message);
+        messageText.setText(QuizUtil.generateMessage(result));
 
-        TextView result = (TextView) findViewById(R.id.result);
-        result.setText(Integer.toString(this.result) + " of " + QuizUtil.QUESTIONS_COUNT);
+        TextView resultText = (TextView) findViewById(R.id.result);
+        resultText.setText(Integer.toString(this.result) + " of " + QuizUtil.QUESTIONS_COUNT);
 
-        TextView bestResult = (TextView) findViewById(R.id.bestResult);
-        bestResult.setText(Integer.toString(quiz.getBestResult()));
+        TextView bestResultText = (TextView) findViewById(R.id.bestResult);
+        bestResultText.setText(Integer.toString(quiz.getBestResult()));
 
-        TextView spentTime = (TextView) findViewById(R.id.spentTime);
-        spentTime.setText(QuizUtil.countSpentTime(startTime));
+        TextView spentTimeText = (TextView) findViewById(R.id.spentTime);
+        spentTimeText.setText(QuizUtil.countSpentTime(startTime));
     }
 }
