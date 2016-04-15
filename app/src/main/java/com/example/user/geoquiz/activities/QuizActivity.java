@@ -3,6 +3,7 @@ package com.example.user.geoquiz.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -289,6 +290,9 @@ public class QuizActivity
                 button.setChecked(userAnswer != null
                         && userAnswers.containsKey(currentQuestionNum)
                         && answer.equals(userAnswer));
+                button.setTextSize(20);
+                button.setTextColor(Color.rgb(61, 61, 61));
+                button.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
                 answersRadioGroup.addView(button);
             }
         } else {

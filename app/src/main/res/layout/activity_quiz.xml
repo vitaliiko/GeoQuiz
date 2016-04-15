@@ -12,12 +12,15 @@
         <TextView
             android:id="@+id/quizName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/HeaderFontStyle"
+            android:gravity="center_horizontal"/>
 
         <TextView
             android:id="@+id/quizDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/QuestionTextStyle"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
+                style="@style/QuestionTextStyle"
                 android:text="Attempts made: "/>
 
             <TextView
@@ -36,7 +40,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left" />
+                android:gravity="left"
+                style="@style/QuestionTextStyle"/>
 
         </LinearLayout>
 
@@ -50,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
+                style="@style/QuestionTextStyle"
                 android:text="Best result: "/>
 
             <TextView
@@ -57,7 +63,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"/>
+                android:gravity="left"
+                style="@style/QuestionTextStyle"/>
 
         </LinearLayout>
 
@@ -71,13 +78,12 @@
                 android:id="@+id/resetButton"
                 style="@style/QuizActivityButtonsStyle"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginRight="16dp"
                 android:text="Reset"/>
 
             <Button
                 android:id="@+id/startButton"
                 style="@style/QuizActivityButtonsStyle"
-                android:layout_marginLeft="4dp"
                 android:layout_marginRight="16dp"
                 android:text="Start"/>
 
@@ -107,19 +113,22 @@
                     android:id="@+id/currentQuestionNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"/>
+                    android:layout_marginTop="16dp"
+                    style="@style/QuestionTextStyle"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    style="@style/QuestionTextStyle"
+                    android:layout_marginTop="16dp"
                     android:text=" of "/>
 
                 <TextView
                     android:id="@+id/questionsCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"/>
+                    android:layout_marginTop="16dp"
+                    style="@style/QuestionTextStyle"/>
 
             </LinearLayout>
 
@@ -127,6 +136,7 @@
                 android:id="@+id/quizImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:contentDescription="" />
 
             <LinearLayout
@@ -135,18 +145,16 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
+                    style="@style/QuestionTextStyle"
                     android:text="Your answer: "/>
 
                 <TextView
                     android:id="@+id/userAnswer"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left"/>
+                    style="@style/QuestionTextStyle"/>
 
             </LinearLayout>
 
@@ -156,30 +164,32 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
+                    style="@style/QuestionTextStyle"
                     android:text="Right answer: "/>
 
                 <TextView
                     android:id="@+id/rightAnswer"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left"/>
+                    style="@style/QuestionTextStyle"/>
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/questionText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                style="@style/QuestionTextStyle"/>
 
             <RadioGroup
                 android:id="@+id/answersRadioGroup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="24dp">
 
             </RadioGroup>
 
@@ -194,7 +204,7 @@
                     style="@style/QuizActivityButtonsStyle"
                     android:enabled="false"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginRight="16dp"
                     android:text="Prev"/>
 
                 <Button
@@ -212,7 +222,7 @@
                 <Button
                     android:id="@+id/nextButton"
                     style="@style/QuizActivityButtonsStyle"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:text="Next"/>
 
@@ -232,7 +242,9 @@
         <TextView
             android:id="@+id/message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            style="@style/ResultTextStyle"
+            android:layout_gravity="center_horizontal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -244,26 +256,30 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="Result: "/>
+                style="@style/ResultTextStyle"
+                android:text="Your result: "/>
 
             <TextView
                 android:id="@+id/result"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="@style/ResultTextStyle"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
+                style="@style/ResultTextStyle"
                 android:text="Best result: "/>
 
             <TextView
@@ -271,28 +287,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"/>
+                android:gravity="left"
+                style="@style/ResultTextStyle"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
+                style="@style/ResultTextStyle"
+                android:layout_gravity="center_horizontal"
                 android:text="Spent time: "/>
 
             <TextView
                 android:id="@+id/spentTime"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"/>
+                android:layout_gravity="center_horizontal"
+                style="@style/ResultTextStyle"/>
 
         </LinearLayout>
 
@@ -306,7 +323,7 @@
                 android:id="@+id/tryAgainButton"
                 style="@style/QuizActivityButtonsStyle"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="16dp"
                 android:text="Try again"/>
 
             <Button
