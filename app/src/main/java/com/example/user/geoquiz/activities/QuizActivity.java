@@ -262,6 +262,9 @@ public class QuizActivity
         TextView quizNameText = (TextView) findViewById(R.id.quizName);
         quizNameText.setText(quiz.getName());
 
+        ImageView image = (ImageView) findViewById(R.id.titleImage);
+        image.setImageResource((Integer) getIntent().getSerializableExtra("titleImage"));
+
         TextView quizDescriptionText = (TextView) findViewById(R.id.quizDescription);
         quizDescriptionText.setText(quiz.getDescription());
 
