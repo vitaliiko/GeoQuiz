@@ -19,9 +19,6 @@ import com.example.user.geoquiz.R;
 import com.example.user.geoquiz.model.Question;
 import com.example.user.geoquiz.model.Quiz;
 import com.example.user.geoquiz.model.QuizUtil;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,11 +39,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button nextButton;
     private Button prevButton;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,9 +51,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         setClickListeners();
         prepareQuizInfo();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -116,16 +105,13 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             getResult();
             prepareResultInfo();
 
-            ScrollView questionScroll = (ScrollView) findViewById(R.id.questionScroll);
-            assert questionScroll != null;
+            View questionScroll = findViewById(R.id.questionScroll);
             questionScroll.setVisibility(View.GONE);
 
-            ViewGroup questionLayout = (ViewGroup) findViewById(R.id.questionLayout);
-            assert questionLayout != null;
+            View questionLayout = findViewById(R.id.questionLayout);
             questionLayout.setVisibility(View.GONE);
 
-            ViewGroup resultLayout = (ViewGroup) findViewById(R.id.resultLayout);
-            assert resultLayout != null;
+            View resultLayout = findViewById(R.id.resultLayout);
             resultLayout.setVisibility(View.VISIBLE);
         }
     }
@@ -140,7 +126,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private void showRightAnswer() {
         int rightAnswer = questions.get(currentQuestionNum).getRightAnswer();
         RadioButton radioButton = (RadioButton) findViewById(rightAnswer);
-        assert radioButton != null;
         radioButton.setChecked(true);
         showingAnswers.add(currentQuestionNum);
     }
@@ -159,20 +144,16 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private void startQuiz() {
         questions = QuizUtil.getRandomQuestions(quiz.getQuestions());
 
-        ViewGroup resultLayout = (ViewGroup) findViewById(R.id.resultLayout);
-        assert resultLayout != null;
+        View resultLayout = findViewById(R.id.resultLayout);
         resultLayout.setVisibility(View.GONE);
 
-        ViewGroup startLayout = (ViewGroup) findViewById(R.id.startLayout);
-        assert startLayout != null;
+        View startLayout = findViewById(R.id.startLayout);
         startLayout.setVisibility(View.GONE);
 
-        ViewGroup questionLayout = (ViewGroup) findViewById(R.id.questionLayout);
-        assert questionLayout != null;
+        View questionLayout = findViewById(R.id.questionLayout);
         questionLayout.setVisibility(View.VISIBLE);
 
-        ScrollView questionScroll = (ScrollView) findViewById(R.id.questionScroll);
-        assert questionScroll != null;
+        View questionScroll = findViewById(R.id.questionScroll);
         questionScroll.setVisibility(View.VISIBLE);
 
         quiz.addAttempt();
@@ -197,19 +178,15 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private void prepareQuizInfo() {
         TextView quizName = (TextView) findViewById(R.id.quizName);
-        assert quizName != null;
         quizName.setText(quiz.getName());
 
         TextView quizDescription = (TextView) findViewById(R.id.quizDescription);
-        assert quizDescription != null;
         quizDescription.setText(quiz.getDescription());
 
         TextView quizAttempts = (TextView) findViewById(R.id.quizAttempts);
-        assert quizAttempts != null;
         quizAttempts.setText(Integer.toString(quiz.getAttempts()));
 
         TextView quizBestResult = (TextView) findViewById(R.id.quizBestResult);
-        assert quizBestResult != null;
         quizBestResult.setText(Integer.toString(quiz.getBestResult()));
     }
 
@@ -222,23 +199,18 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         ImageView image = (ImageView) findViewById(R.id.quizImage);
-        assert image != null;
         image.setImageResource(question.getImage());
 
         TextView currentQuestionNum = (TextView) findViewById(R.id.currentQuestionNum);
-        assert currentQuestionNum != null;
         currentQuestionNum.setText(Integer.toString(this.currentQuestionNum + 1));
 
         TextView questionsCount = (TextView) findViewById(R.id.questionsCount);
-        assert questionsCount != null;
         questionsCount.setText(Integer.toString(questions.size()));
 
         TextView questionText = (TextView) findViewById(R.id.questionText);
-        assert questionText != null;
         questionText.setText(question.getQuestionText());
 
         RadioGroup answersGroup = (RadioGroup) findViewById(R.id.answersRadioGroup);
-        assert answersGroup != null;
         answersGroup.removeAllViews();
         for (String answer : question.getAnswers()) {
             RadioButton button = new RadioButton(this);
@@ -261,19 +233,15 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private void prepareResultInfo() {
         TextView message = (TextView) findViewById(R.id.message);
-        assert message != null;
         message.setText(QuizUtil.generateMessage(result));
 
         TextView result = (TextView) findViewById(R.id.result);
-        assert result != null;
         result.setText(Integer.toString(this.result) + " of " + QuizUtil.QUESTIONS_COUNT);
 
         TextView bestResult = (TextView) findViewById(R.id.bestResult);
-        assert bestResult != null;
         bestResult.setText(Integer.toString(quiz.getBestResult()));
 
         TextView spentTime = (TextView) findViewById(R.id.spentTime);
-        assert spentTime != null;
-        bestResult.setText(QuizUtil.countSpentTime(startTime));
+        spentTime.setText(QuizUtil.countSpentTime(startTime));
     }
 }
