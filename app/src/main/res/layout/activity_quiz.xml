@@ -7,44 +7,90 @@
         android:id="@+id/startLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/quizName"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/quizDescription"
+            <TextView
+                android:id="@+id/quizName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/quizDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Attempts made: "/>
+
+                <TextView
+                    android:id="@+id/quizAttempts"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Best result: "/>
+
+                <TextView
+                    android:id="@+id/quizBestResult"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/quizAttempts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/resetButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reset"/>
 
-        <TextView
-            android:id="@+id/quizBestResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/startButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Start"/>
 
-        <TextView
-            android:id="@+id/quizLastResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/startButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start"/>
-
-        <Button
-            android:id="@+id/resetButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reset"/>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -56,9 +102,9 @@
         <LinearLayout
             android:id="@+id/questionLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="invisible">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,17 +114,20 @@
                 <TextView
                     android:id="@+id/currentQuestionNum"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="14sp"
                     android:text=" of "/>
 
                 <TextView
                     android:id="@+id/questionsCount"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 
@@ -88,17 +137,47 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="" />
 
-            <TextView
-                android:id="@+id/userAnswer"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/rightAnswer"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Your answer: "/>
+
+                <TextView
+                    android:id="@+id/userAnswer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Right answer: "/>
+
+                <TextView
+                    android:id="@+id/rightAnswer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/questionText"
@@ -114,29 +193,25 @@
 
             <Button
                 android:id="@+id/prevButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/ButtonStyle"
                 android:enabled="false"
                 android:text="Prev"/>
 
             <Button
                 android:id="@+id/showAnswerButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/ButtonStyle"
                 android:enabled="false"
                 android:text="Show answer"/>
 
             <Button
                 android:id="@+id/completeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/ButtonStyle"
                 android:visibility="gone"
                 android:text="Done!"/>
 
             <Button
                 android:id="@+id/nextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/ButtonStyle"
                 android:text="Next"/>
 
         </LinearLayout>
@@ -172,14 +247,12 @@
 
         <Button
             android:id="@+id/tryAgainButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/ButtonStyle"
             android:text="Try again"/>
 
         <Button
             android:id="@+id/mainMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/ButtonStyle"
             android:text="Main menu"/>
 
     </LinearLayout>
