@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,7 +18,6 @@ import com.example.user.geoquiz.model.Question;
 import com.example.user.geoquiz.model.Quiz;
 import com.example.user.geoquiz.model.QuizUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -69,7 +66,7 @@ public class QuizActivity
 
         quiz = QuizUtil.loadQuiz(this);
 
-        setClickListeners();
+        setListeners();
         prepareQuizInfo();
     }
 
@@ -106,11 +103,17 @@ public class QuizActivity
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        int answerId = answersRadioGroup.getCheckedRadioButtonId();
-        showAnswerButton.setEnabled(answerId > -1);
+        setShowAnswerButtonEnabled();
     }
 
-    private void setClickListeners() {
+    private void setShowAnswerButtonEnabled() {
+        int answerId = answersRadioGroup.getCheckedRadioButtonId();
+        if (answerId > -1) {
+            showAnswerButton.setEnabled(answerId > -1);
+        }
+    }
+
+    private void setListeners() {
         findViewById(R.id.startButton).setOnClickListener(this);
         findViewById(R.id.tryAgainButton).setOnClickListener(this);
         findViewById(R.id.mainMenuButton).setOnClickListener(this);
@@ -123,6 +126,7 @@ public class QuizActivity
 
     private void nextQuestion() {
         saveUserAnswer();
+        answersRadioGroup.clearCheck();
         if (currentQuestionNum == questions.size() - 1) {
             currentQuestionNum = 0;
         } else {
@@ -131,9 +135,12 @@ public class QuizActivity
         prevButton.setEnabled(true);
         prepareQuestion();
         showAnswerButton.setEnabled(false);
+        setShowAnswerButtonEnabled();
     }
 
     private void prevQuestion() {
+        saveUserAnswer();
+        answersRadioGroup.clearCheck();
         if (currentQuestionNum == 0) {
             currentQuestionNum = questions.size() - 1;
         } else {
@@ -141,6 +148,7 @@ public class QuizActivity
         }
         prepareQuestion();
         showAnswerButton.setEnabled(false);
+        setShowAnswerButtonEnabled();
     }
 
     private void showRightAnswer() {
@@ -150,20 +158,22 @@ public class QuizActivity
         showAnswerButton.setEnabled(false);
 
         Integer userAnswerNum = userAnswers.get(currentQuestionNum);
-        String userAnswer = question.getAnswers().get(userAnswerNum);
-        userAnswerText.setText(userAnswer);
-        userAnswerText.setVisibility(View.VISIBLE);
-        rightAnswerText.setText(question.getRightAnswerText());
-        rightAnswerText.setVisibility(View.VISIBLE);
+        if (userAnswerNum != null) {
+            String userAnswer = question.getAnswers().get(userAnswerNum);
+            userAnswerText.setText(userAnswer);
+            userAnswerText.setVisibility(View.VISIBLE);
+            rightAnswerText.setText(question.getRightAnswerText());
+            rightAnswerText.setVisibility(View.VISIBLE);
 
-        questionText.setText(question.getImageDescription());
-        if (userAnswer.equals(question.getRightAnswerText())) {
-            userAnswerText.setTextColor(Color.GREEN);
-        } else {
-            userAnswerText.setTextColor(Color.RED);
+            questionText.setText(question.getImageDescription());
+            if (userAnswer.equals(question.getRightAnswerText())) {
+                userAnswerText.setTextColor(Color.GREEN);
+            } else {
+                userAnswerText.setTextColor(Color.RED);
+            }
+
+            showingAnswers.add(currentQuestionNum);
         }
-
-        showingAnswers.add(currentQuestionNum);
     }
 
     private void goToMainMenu() {
@@ -263,10 +273,6 @@ public class QuizActivity
                 userAnswerText.setTextColor(Color.RED);
             }
         }
-    }
-
-    private void showUserAndRightAnswers() {
-
     }
 
     private void getResult() {
