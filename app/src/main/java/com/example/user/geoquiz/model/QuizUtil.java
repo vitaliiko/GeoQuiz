@@ -44,15 +44,15 @@ public class QuizUtil {
     private static List<Question> getQuestions() {
         List<Question> questions = new ArrayList<>();
         questions.add(new Question(R.drawable.image1, "description", "Question1", getAnswers(4), 0));
-        questions.add(new Question(R.drawable.image2, "description", "Question2", getAnswers(5), 2));
-        questions.add(new Question(R.drawable.image3, "description", "Question3", getAnswers(3), 1));
-        questions.add(new Question(R.drawable.image4, "description", "Question4", getAnswers(4), 3));
-        questions.add(new Question(R.drawable.image5, "description", "Question5", getAnswers(3), 2));
+        questions.add(new Question(R.drawable.image2, "description", "Question2", getAnswers(5), 0));
+        questions.add(new Question(R.drawable.image3, "description", "Question3", getAnswers(3), 0));
+        questions.add(new Question(R.drawable.image4, "description", "Question4", getAnswers(4), 0));
+        questions.add(new Question(R.drawable.image5, "description", "Question5", getAnswers(3), 0));
         questions.add(new Question(R.drawable.image6, "description", "Question6", getAnswers(4), 0));
-        questions.add(new Question(R.drawable.image7, "description", "Question7", getAnswers(5), 2));
-        questions.add(new Question(R.drawable.image8, "description", "Question8", getAnswers(3), 1));
-        questions.add(new Question(R.drawable.image9, "description", "Question9", getAnswers(4), 3));
-        questions.add(new Question(R.drawable.image10, "description", "Question10", getAnswers(3), 2));
+        questions.add(new Question(R.drawable.image7, "description", "Question7", getAnswers(5), 0));
+        questions.add(new Question(R.drawable.image8, "description", "Question8", getAnswers(3), 0));
+        questions.add(new Question(R.drawable.image9, "description", "Question9", getAnswers(4), 0));
+        questions.add(new Question(R.drawable.image10, "description", "Question10", getAnswers(3), 0));
         return questions;
     }
 

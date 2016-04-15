@@ -35,6 +35,7 @@ public class QuizActivity
     private int result;
     private long startTime;
     private int currentQuestionNum;
+    private int maxQuestionNum;
     private List<Question> questions;
     private Set<Integer> showingAnswers = new HashSet<>();
     private Map<Integer, Integer> userAnswers = new HashMap<>();
@@ -60,14 +61,14 @@ public class QuizActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        initViews();
+        initViewsVariables();
         quiz = QuizUtil.loadQuiz(this);
 
         setListeners();
         prepareQuizInfo();
     }
 
-    private void initViews() {
+    private void initViewsVariables() {
         nextButton = (Button) findViewById(R.id.nextButton);
         prevButton = (Button) findViewById(R.id.prevButton);
         showAnswerButton = (Button) findViewById(R.id.showAnswerButton);
@@ -154,6 +155,9 @@ public class QuizActivity
             currentQuestionNum = 0;
         } else {
             currentQuestionNum++;
+            if (currentQuestionNum > maxQuestionNum) {
+                maxQuestionNum = currentQuestionNum;
+            }
         }
         prevButton.setEnabled(true);
         prepareQuestion();
@@ -168,6 +172,8 @@ public class QuizActivity
             currentQuestionNum = questions.size() - 1;
         } else {
             currentQuestionNum--;
+            prevButton.setEnabled(currentQuestionNum > 0
+                    || maxQuestionNum == QuizUtil.QUESTIONS_COUNT - 1);
         }
         prepareQuestion();
         showAnswerButton.setEnabled(false);
@@ -229,6 +235,7 @@ public class QuizActivity
         quiz.addAttempt();
         startTime = System.currentTimeMillis();
         currentQuestionNum = 0;
+        maxQuestionNum = 0;
         result = 0;
         userAnswers.clear();
         showingAnswers.clear();
