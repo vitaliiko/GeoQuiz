@@ -12,8 +12,6 @@ public class Question implements Serializable {
     private List<String> answers = new ArrayList<>();
     private int rightAnswer;
 
-    public Question() {}
-
     public Question(int image, String imageDescription, String questionText, int rightAnswer) {
         this.image = image;
         this.imageDescription = imageDescription;

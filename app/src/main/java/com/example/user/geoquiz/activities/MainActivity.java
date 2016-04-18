@@ -1,14 +1,13 @@
 package com.example.user.geoquiz.activities;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.user.geoquiz.R;
 import com.example.user.geoquiz.model.Quiz;
-import com.example.user.geoquiz.model.QuizUtil;
+import com.example.user.geoquiz.utils.QuizUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -16,7 +15,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         addClickListener();
     }
 
@@ -30,10 +28,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, QuizActivity.class);
+        Intent intent = new Intent(this, StartQuizActivity.class);
         Quiz quiz = null;
         switch (v.getId()) {
-            case R.id.architecturalQuiz:{
+            case R.id.architecturalQuiz: {
                 quiz = QuizUtil.loadQuiz(this, R.raw.architectural_monuments);
                 quiz.setName("Architectural monuments");
                 quiz.setDescription("Try to guess where architectural buildings are located");

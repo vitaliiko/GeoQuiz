@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.example.user.geoquiz.R;
 import com.example.user.geoquiz.model.Question;
 import com.example.user.geoquiz.model.Quiz;
-import com.example.user.geoquiz.model.QuizUtil;
+import com.example.user.geoquiz.utils.QuizUtil;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -64,7 +64,6 @@ public class QuizActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         initViewsVariables();
         quiz = (Quiz) getIntent().getSerializableExtra("quiz");
@@ -88,8 +87,6 @@ public class QuizActivity
         answersRadioGroup = (RadioGroup) findViewById(R.id.answersRadioGroup);
         image = (ImageView) findViewById(R.id.quizImage);
 
-        resultLayout = (LinearLayout) findViewById(R.id.resultLayout);
-        startLayout = (LinearLayout) findViewById(R.id.startLayout);
         questionLayout = (LinearLayout) findViewById(R.id.questionLayout);
         userAnswerLayout = (LinearLayout) findViewById(R.id.userAnswerLayout);
         rightAnswerLayout = (LinearLayout) findViewById(R.id.rightAnswerLayout);

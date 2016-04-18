@@ -1,9 +1,11 @@
-package com.example.user.geoquiz.model;
+package com.example.user.geoquiz.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.user.geoquiz.model.Question;
+import com.example.user.geoquiz.model.Quiz;
 import com.google.gson.Gson;
 
 import java.io.IOException;

@@ -1,6 +1,9 @@
-package com.example.user.geoquiz.model;
+package com.example.user.geoquiz.utils;
 
 import android.content.Context;
+
+import com.example.user.geoquiz.model.Question;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

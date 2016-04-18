@@ -19,8 +19,16 @@
 
         <activity
             android:name="com.example.user.geoquiz.activities.QuizActivity">
-
         </activity>
+
+        <activity
+            android:name="com.example.user.geoquiz.activities.StartQuizActivity">
+        </activity>
+
+        <activity
+            android:name="com.example.user.geoquiz.activities.ResultActivity">
+        </activity>
+
     </application>
 
 </manifest>
