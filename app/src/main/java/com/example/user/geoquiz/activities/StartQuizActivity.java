@@ -37,29 +37,29 @@ public class StartQuizActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.startButton: {
+            case R.id.btn_start: {
                 Intent intent = new Intent(this, QuizActivity.class);
                 intent.putExtra(Quiz.class.getSimpleName(), quiz);
                 startActivity(intent);
             }
-            case R.id.resetButton: {
+            case R.id.btn_reset: {
                 resetResults();
             }
         }
     }
 
     private void initViews() {
-        quizNameText = (TextView) findViewById(R.id.quizName);
-        image = (ImageView) findViewById(R.id.titleImage);
-        quizDescriptionText = (TextView) findViewById(R.id.quizDescription);
-        quizAttemptsText = (TextView) findViewById(R.id.quizAttempts);
-        quizBestResultText = (TextView) findViewById(R.id.quizBestResult);
+        quizNameText = (TextView) findViewById(R.id.text_quiz_name);
+        image = (ImageView) findViewById(R.id.img_main);
+        quizDescriptionText = (TextView) findViewById(R.id.text_quiz_description);
+        quizAttemptsText = (TextView) findViewById(R.id.text_quiz_attempts);
+        quizBestResultText = (TextView) findViewById(R.id.text_best_result);
 
     }
 
     private void setListeners() {
-        findViewById(R.id.startButton).setOnClickListener(this);
-        findViewById(R.id.resetButton).setOnClickListener(this);
+        findViewById(R.id.btn_start).setOnClickListener(this);
+        findViewById(R.id.btn_reset).setOnClickListener(this);
     }
 
     private void prepareQuizInfo() {

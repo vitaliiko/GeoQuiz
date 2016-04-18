@@ -1,153 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/questionScroll"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/questionLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:id="@+id/currentQuestionNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textStyle="bold"
-                    style="@style/QuestionTextStyle"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/QuestionTextStyle"
-                    android:textStyle="bold"
-                    android:layout_marginTop="16dp"
-                    android:text="of"/>
-
-                <TextView
-                    android:id="@+id/questionsCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textStyle="bold"
-                    style="@style/QuestionTextStyle"/>
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/quizImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:contentDescription="" />
-
-            <LinearLayout
-                android:id="@+id/userAnswerLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/QuestionTextStyle"
-                    android:text="Your answer: "/>
-
-                <TextView
-                    android:id="@+id/userAnswerText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/QuestionTextStyle"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rightAnswerLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/QuestionTextStyle"
-                    android:text="Right answer: "/>
-
-                <TextView
-                    android:id="@+id/rightAnswerText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/QuestionTextStyle"/>
-
-            </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/questionText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/QuestionTextStyle"/>
-
-            <RadioGroup
-                android:id="@+id/answersRadioGroup"
-                android:layout_width="match_parent"
+                android:id="@+id/text_current_question_num"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginBottom="24dp">
+                android:textStyle="bold"
+                style="@style/QuestionTextStyle"/>
 
-            </RadioGroup>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/QuestionTextStyle"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:text="of"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_gravity="bottom">
-
-                <Button
-                    android:id="@+id/prevButton"
-                    style="@style/QuizActivityButtonsStyle"
-                    android:enabled="false"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:text="Prev"/>
-
-                <Button
-                    android:id="@+id/showAnswerButton"
-                    style="@style/QuizActivityButtonsStyle"
-                    android:enabled="false"
-                    android:text="Show answer"/>
-
-                <Button
-                    android:id="@+id/completeButton"
-                    style="@style/QuizActivityButtonsStyle"
-                    android:visibility="gone"
-                    android:text="Done!"/>
-
-                <Button
-                    android:id="@+id/nextButton"
-                    style="@style/QuizActivityButtonsStyle"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:text="Next"/>
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/text_question_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                style="@style/QuestionTextStyle"/>
 
         </LinearLayout>
 
-    </ScrollView>
+        <ImageView
+            android:id="@+id/img_quiz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:contentDescription="" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/text_user_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            style="@style/QuestionTextStyle"/>
+
+        <TextView
+            android:id="@+id/text_right_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            style="@style/QuestionTextStyle"/>
+
+        <TextView
+            android:id="@+id/text_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/QuestionTextStyle"/>
+
+        <RadioGroup
+            android:id="@+id/radio_gr_answers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="24dp">
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom">
+
+            <Button
+                android:id="@+id/btn_prev"
+                style="@style/QuizActivityButtonsStyle"
+                android:enabled="false"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="Prev"/>
+
+            <Button
+                android:id="@+id/btn_show_answer"
+                style="@style/QuizActivityButtonsStyle"
+                android:enabled="false"
+                android:text="Show answer"/>
+
+            <Button
+                android:id="@+id/btn_complete"
+                style="@style/QuizActivityButtonsStyle"
+                android:visibility="gone"
+                android:text="Done!"/>
+
+            <Button
+                android:id="@+id/btn_next"
+                style="@style/QuizActivityButtonsStyle"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="Next"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

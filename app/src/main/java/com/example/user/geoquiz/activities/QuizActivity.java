@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -48,8 +47,6 @@ public class QuizActivity
     private TextView questionsCountText;
     private ImageView image;
     private RadioGroup answersRadioGroup;
-    private LinearLayout userAnswerLayout;
-    private LinearLayout rightAnswerLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,48 +61,45 @@ public class QuizActivity
     }
 
     private void initViews() {
-        nextButton = (Button) findViewById(R.id.nextButton);
-        prevButton = (Button) findViewById(R.id.prevButton);
-        showAnswerButton = (Button) findViewById(R.id.showAnswerButton);
-        completeButton = (Button) findViewById(R.id.completeButton);
+        nextButton = (Button) findViewById(R.id.btn_next);
+        prevButton = (Button) findViewById(R.id.btn_prev);
+        showAnswerButton = (Button) findViewById(R.id.btn_show_answer);
+        completeButton = (Button) findViewById(R.id.btn_complete);
 
-        userAnswerText = (TextView) findViewById(R.id.userAnswerText);
-        rightAnswerText = (TextView) findViewById(R.id.rightAnswerText);
-        questionText = (TextView) findViewById(R.id.questionText);
-        currentQuestionNumText = (TextView) findViewById(R.id.currentQuestionNum);
-        questionsCountText = (TextView) findViewById(R.id.questionsCount);
+        userAnswerText = (TextView) findViewById(R.id.text_user_answer);
+        rightAnswerText = (TextView) findViewById(R.id.text_right_answer);
+        questionText = (TextView) findViewById(R.id.text_question);
+        currentQuestionNumText = (TextView) findViewById(R.id.text_current_question_num);
+        questionsCountText = (TextView) findViewById(R.id.text_question_count);
 
-        answersRadioGroup = (RadioGroup) findViewById(R.id.answersRadioGroup);
-        image = (ImageView) findViewById(R.id.quizImage);
-
-        userAnswerLayout = (LinearLayout) findViewById(R.id.userAnswerLayout);
-        rightAnswerLayout = (LinearLayout) findViewById(R.id.rightAnswerLayout);
+        answersRadioGroup = (RadioGroup) findViewById(R.id.radio_gr_answers);
+        image = (ImageView) findViewById(R.id.img_quiz);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tryAgainButton: {
+            case R.id.btn_try_again: {
                 startQuiz();
                 break;
             }
-            case R.id.nextButton: {
+            case R.id.btn_next: {
                 nextQuestion();
                 break;
             }
-            case R.id.prevButton: {
+            case R.id.btn_prev: {
                 prevQuestion();
                 break;
             }
-            case R.id.showAnswerButton: {
+            case R.id.btn_show_answer: {
                 showRightAnswer();
                 break;
             }
-            case R.id.mainMenuButton: {
+            case R.id.btn_main_menu: {
                 goToMainMenu();
                 break;
             }
-            case R.id.completeButton: {
+            case R.id.btn_complete: {
                 goToResultActivity();
                 break;
             }
@@ -173,17 +167,8 @@ public class QuizActivity
         Integer userAnswerNum = userAnswers.get(currentQuestionNum);
         if (userAnswerNum != null) {
             String userAnswer = question.getAnswers().get(userAnswerNum);
-            userAnswerText.setText(userAnswer);
-            userAnswerLayout.setVisibility(View.VISIBLE);
-            rightAnswerText.setText(question.getRightAnswerText());
-            rightAnswerLayout.setVisibility(View.VISIBLE);
-
+            showAnswer(userAnswer, question.getRightAnswerText());
             questionText.setText(question.getImageDescription());
-            if (userAnswer.equals(question.getRightAnswerText())) {
-                userAnswerText.setTextColor(Color.GREEN);
-            } else {
-                userAnswerText.setTextColor(Color.RED);
-            }
 
             showingAnswers.add(currentQuestionNum);
             if (showingAnswers.size() == QuizUtil.QUESTIONS_COUNT) {
@@ -243,8 +228,8 @@ public class QuizActivity
             userAnswer = question.getAnswers().get(userAnswerNum);
         }
         if (!showingAnswers.contains(currentQuestionNum)) {
-            userAnswerLayout.setVisibility(View.GONE);
-            rightAnswerLayout.setVisibility(View.GONE);
+            userAnswerText.setVisibility(View.GONE);
+            rightAnswerText.setVisibility(View.GONE);
             questionText.setText(question.getQuestionText());
 
             for (String answer : question.getAnswers()) {
@@ -260,17 +245,21 @@ public class QuizActivity
                 answersRadioGroup.addView(button);
             }
         } else {
-            userAnswerText.setText(userAnswer);
-            userAnswerLayout.setVisibility(View.VISIBLE);
-            rightAnswerText.setText(question.getRightAnswerText());
-            rightAnswerLayout.setVisibility(View.VISIBLE);
-
+            showAnswer(userAnswer, question.getRightAnswerText());
             questionText.setText(question.getImageDescription());
-            if (userAnswer.equals(question.getRightAnswerText())) {
-                userAnswerText.setTextColor(Color.GREEN);
-            } else {
-                userAnswerText.setTextColor(Color.RED);
-            }
+        }
+    }
+
+    private void showAnswer(String userAnswer, String rightAnswer) {
+        userAnswerText.setText("Your answer: " + userAnswer);
+        userAnswerText.setVisibility(View.VISIBLE);
+        rightAnswerText.setText("Right answer: " + rightAnswer);
+        rightAnswerText.setVisibility(View.VISIBLE);
+
+        if (userAnswer.equals(rightAnswer)) {
+            userAnswerText.setTextColor(Color.GREEN);
+        } else {
+            userAnswerText.setTextColor(Color.RED);
         }
     }
 }

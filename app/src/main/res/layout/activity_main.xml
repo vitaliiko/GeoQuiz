@@ -12,42 +12,32 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/architecturalQuiz"
+        android:id="@+id/layout_architectural_quiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
         android:padding="10dip"
         android:background="#ffffff"
         android:layout_marginBottom="16dp">
 
         <ImageView
-            android:id="@+id/architecturalImage"
+            android:id="@+id/img_architectural"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:src="@drawable/image1" />
 
         <TextView
-            android:id="@+id/architecturalTitle"
+            android:id="@+id/text_architectural_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/architecturalImage"
-            android:layout_alignTop="@+id/architecturalImage"
+            android:layout_toRightOf="@+id/img_architectural"
+            android:layout_alignTop="@+id/img_architectural"
             style="@style/HeaderFontStyle"
             android:text="Architectural monuments"/>
-
-        <TextView
-            android:id="@+id/architecturalDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/architecturalImage"
-            android:layout_below="@+id/architecturalTitle"
-            style="@style/QuestionTextStyle" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/modernBuildingsQuiz"
+        android:id="@+id/layout_modernBuildings_quiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -56,27 +46,19 @@
         android:background="#ffffff">
 
         <ImageView
-            android:id="@+id/modernBuildingsImage"
+            android:id="@+id/img_modern_buildings"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:src="@drawable/image12" />
 
         <TextView
-            android:id="@+id/modernBuildingsTitle"
+            android:id="@+id/text_modern_buildings_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/modernBuildingsImage"
-            android:layout_alignTop="@+id/modernBuildingsImage"
+            android:layout_toRightOf="@+id/img_modern_buildings"
+            android:layout_alignTop="@+id/img_modern_buildings"
             style="@style/HeaderFontStyle"
             android:text="Modern buildings"/>
-
-        <TextView
-            android:id="@+id/modernBuildingsDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/modernBuildingsImage"
-            android:layout_below="@+id/modernBuildingsTitle"
-            style="@style/QuestionTextStyle" />
 
     </RelativeLayout>
 

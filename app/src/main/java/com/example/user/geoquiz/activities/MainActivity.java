@@ -19,11 +19,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void addClickListener() {
-        View architecturalQuiz = findViewById(R.id.architecturalQuiz);
-        architecturalQuiz.setOnClickListener(this);
-
-        View modernBuildingsQuiz = findViewById(R.id.modernBuildingsQuiz);
-        modernBuildingsQuiz.setOnClickListener(this);
+        findViewById(R.id.layout_architectural_quiz).setOnClickListener(this);
+        findViewById(R.id.layout_modernBuildings_quiz).setOnClickListener(this);
     }
 
     @Override
@@ -31,14 +28,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(this, StartQuizActivity.class);
         Quiz quiz = null;
         switch (v.getId()) {
-            case R.id.architecturalQuiz: {
+            case R.id.layout_architectural_quiz: {
                 quiz = QuizUtil.loadQuiz(this, R.raw.architectural_monuments);
                 quiz.setName("Architectural monuments");
                 quiz.setDescription("Try to guess where architectural buildings are located");
                 intent.putExtra("titleImage", R.drawable.image1);
                 break;
             }
-            case R.id.modernBuildingsQuiz: {
+            case R.id.layout_modernBuildings_quiz: {
                 quiz = QuizUtil.loadQuiz(this, R.raw.modern_buildings);
                 quiz.setName("Architectural monuments");
                 quiz.setDescription("Try to guess where modern buildings are located");
