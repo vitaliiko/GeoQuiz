@@ -1,6 +1,8 @@
 package com.example.user.geoquiz.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,7 +18,9 @@ import android.widget.TextView;
 import com.example.user.geoquiz.R;
 import com.example.user.geoquiz.model.Question;
 import com.example.user.geoquiz.model.Quiz;
+import com.example.user.geoquiz.model.Result;
 import com.example.user.geoquiz.utils.QuizUtil;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -250,9 +254,9 @@ public class QuizActivity
     }
 
     private void showAnswer(String userAnswer, String rightAnswer) {
-        userAnswerText.setText(R.string.your_answer + userAnswer);
+        userAnswerText.setText(getString(R.string.your_answer) + " " + userAnswer);
         userAnswerText.setVisibility(View.VISIBLE);
-        rightAnswerText.setText(R.string.right_answer + rightAnswer);
+        rightAnswerText.setText(getString(R.string.right_answer) + " " + rightAnswer);
         rightAnswerText.setVisibility(View.VISIBLE);
 
         if (userAnswer.equals(rightAnswer)) {
@@ -271,5 +275,11 @@ public class QuizActivity
         if (result > quiz.getBestResult()) {
             quiz.setBestResult(result);
         }
+
+        Result resultObject = new Result(quiz.getAttempts(), quiz.getBestResult());
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(quiz.getName(), new Gson().toJson(resultObject));
+        editor.commit();
     }
 }

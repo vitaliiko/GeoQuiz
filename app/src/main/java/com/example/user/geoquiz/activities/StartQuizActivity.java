@@ -1,6 +1,8 @@
 package com.example.user.geoquiz.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +12,8 @@ import android.widget.TextView;
 
 import com.example.user.geoquiz.R;
 import com.example.user.geoquiz.model.Quiz;
-import com.example.user.geoquiz.utils.QuizUtil;
+import com.example.user.geoquiz.model.Result;
+import com.google.gson.Gson;
 
 public class StartQuizActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,6 +31,7 @@ public class StartQuizActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_start_quiz);
 
         quiz = (Quiz) getIntent().getSerializableExtra(Quiz.class.getSimpleName());
+        loadResult();
 
         initViews();
         setListeners();
@@ -73,6 +77,22 @@ public class StartQuizActivity extends AppCompatActivity implements View.OnClick
     private void resetResults() {
         quiz.setAttempts(0);
         quiz.setBestResult(0);
-        QuizUtil.saveQuiz(quiz, this);
+
+        Result resultObject = new Result(quiz.getAttempts(), quiz.getBestResult());
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(quiz.getName(), new Gson().toJson(resultObject));
+        editor.commit();
+    }
+
+    private void loadResult() {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String resultString = sharedPref.getString(quiz.getName(), "");
+        Result result = new Gson().fromJson(resultString, Result.class);
+
+        if (result != null) {
+            quiz.setAttempts(result.getAttempts());
+            quiz.setBestResult(result.getBestResult());
+        }
     }
 }

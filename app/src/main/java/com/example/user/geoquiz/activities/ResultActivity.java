@@ -66,7 +66,7 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         messageText.setText(getString(stringId));
         bestResultText.setText(Integer.toString(quiz.getBestResult()));
         spentTimeText.setText(quiz.getSpentTime());
-        resultText.setText(Integer.toString(quiz.getLastResult())
-                + getString(R.string.of) + QuizUtil.QUESTIONS_COUNT);
+        resultText.setText(Integer.toString(quiz.getLastResult()) + " "
+                + getString(R.string.of) + " " + QuizUtil.QUESTIONS_COUNT);
     }
 }

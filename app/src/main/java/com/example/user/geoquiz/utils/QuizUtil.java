@@ -1,13 +1,10 @@
 package com.example.user.geoquiz.utils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.example.user.geoquiz.R;
 import com.example.user.geoquiz.model.Question;
 import com.example.user.geoquiz.model.Quiz;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,16 +18,6 @@ public class QuizUtil {
 
     public static final int QUESTIONS_COUNT = 5;
 
-    public static void saveQuiz(Quiz quiz, Context context) {
-        SharedPreferences appSharedPrefs =
-                PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(quiz);
-        prefsEditor.putString("quiz", json);
-        prefsEditor.apply();
-    }
-
     public static Quiz loadQuiz(Context context, int resourceFileId) {
         Quiz quiz = new Quiz();
         quiz.setQuestions(ContentLoader.loadContent(context, resourceFileId));
@@ -42,7 +29,7 @@ public class QuizUtil {
         try {
             questionsSet = new HashSet<>();
             if (questionsList.size() < QUESTIONS_COUNT) {
-                throw new IOException("");
+                throw new IOException("Questions count must not be less then " + QUESTIONS_COUNT);
             }
             while (questionsSet.size() < QUESTIONS_COUNT) {
                 int randomIndex = (int) (Math.random() * questionsList.size());
@@ -84,7 +71,7 @@ public class QuizUtil {
         long spentTime = Math.abs(currentTime - startTime);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(spentTime);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(spentTime) - minutes * 60;
-        return minutes + context.getString(R.string.minutes) +
-                seconds + context.getString(R.string.seconds);
+        return minutes + " " + context.getString(R.string.minutes) + ", " +
+                seconds + " " + context.getString(R.string.seconds);
     }
 }
