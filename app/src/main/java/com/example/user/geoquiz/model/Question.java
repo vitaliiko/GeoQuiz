@@ -66,4 +66,29 @@ public class Question implements Serializable {
     public void copyAnswers(List<String> answers) {
         this.answers.addAll(answers);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Question question = (Question) o;
+
+        return image == question.image
+                && rightAnswer == question.rightAnswer
+                && imageDescription.equals(question.imageDescription)
+                && questionText.equals(question.questionText)
+                && answers.equals(question.answers);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = image;
+        result = 31 * result + imageDescription.hashCode();
+        result = 31 * result + questionText.hashCode();
+        result = 31 * result + answers.hashCode();
+        result = 31 * result + rightAnswer;
+        return result;
+    }
 }

@@ -14,8 +14,6 @@ import com.example.user.geoquiz.utils.QuizUtil;
 public class ResultActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Quiz quiz;
-    private int result;
-    private String spentTime;
 
     private TextView messageText;
     private TextView resultText;
@@ -28,8 +26,6 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_result);
 
         quiz = (Quiz) getIntent().getSerializableExtra(Quiz.class.getSimpleName());
-        result = (int) getIntent().getSerializableExtra("result");
-        spentTime = (String) getIntent().getSerializableExtra("spentTime");
 
         initViews();
         prepareResultInfo();
@@ -66,9 +62,10 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void prepareResultInfo() {
-        messageText.setText(QuizUtil.generateMessage(result));
-        resultText.setText(Integer.toString(result) + " of " + QuizUtil.QUESTIONS_COUNT);
+        messageText.setText(QuizUtil.generateMessage(quiz.getLastResult()));
         bestResultText.setText(Integer.toString(quiz.getBestResult()));
-        spentTimeText.setText(spentTime);
+        spentTimeText.setText(quiz.getSpentTime());
+        resultText.setText(Integer.toString(quiz.getLastResult())
+                + " of " + QuizUtil.QUESTIONS_COUNT);
     }
 }

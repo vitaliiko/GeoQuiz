@@ -32,14 +32,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 quiz = QuizUtil.loadQuiz(this, R.raw.architectural_monuments);
                 quiz.setName("Architectural monuments");
                 quiz.setDescription("Try to guess where architectural buildings are located");
-                intent.putExtra("titleImage", R.drawable.image1);
+                quiz.setMainImage(R.drawable.image1);
                 break;
             }
             case R.id.layout_modernBuildings_quiz: {
                 quiz = QuizUtil.loadQuiz(this, R.raw.modern_buildings);
-                quiz.setName("Architectural monuments");
+                quiz.setName("Modern buildings");
                 quiz.setDescription("Try to guess where modern buildings are located");
-                intent.putExtra("titleImage", R.drawable.image12);
+                quiz.setMainImage(R.drawable.image12);
                 break;
             }
         }

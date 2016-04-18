@@ -6,12 +6,13 @@ import java.util.List;
 public class Quiz implements Serializable {
 
     private String name;
-    private int titleImage;
+    private int mainImage;
     private String description;
     private List<Question> questions;
     private int attempts = 0;
     private int bestResult = 0;
     private int lastResult = 0;
+    private String spentTime;
 
     public Quiz() {}
 
@@ -23,12 +24,12 @@ public class Quiz implements Serializable {
         this.name = name;
     }
 
-    public int getTitleImage() {
-        return titleImage;
+    public int getMainImage() {
+        return mainImage;
     }
 
-    public void setTitleImage(int titleImage) {
-        this.titleImage = titleImage;
+    public void setMainImage(int mainImage) {
+        this.mainImage = mainImage;
     }
 
     public String getDescription() {
@@ -73,5 +74,36 @@ public class Quiz implements Serializable {
 
     public void addAttempt() {
         attempts++;
+    }
+
+    public String getSpentTime() {
+        return spentTime;
+    }
+
+    public void setSpentTime(String spentTime) {
+        this.spentTime = spentTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Quiz quiz = (Quiz) o;
+
+        return mainImage == quiz.mainImage
+                && name.equals(quiz.name)
+                && description.equals(quiz.description)
+                && questions.equals(quiz.questions);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + mainImage;
+        result = 31 * result + description.hashCode();
+        result = 31 * result + questions.hashCode();
+        return result;
     }
 }

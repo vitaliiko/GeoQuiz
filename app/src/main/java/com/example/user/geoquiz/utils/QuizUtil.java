@@ -53,7 +53,9 @@ public class QuizUtil {
         return new ArrayList<>(questionsSet);
     }
 
-    public static int countRightAnswers(Quiz quiz, List<Question> questions, Map<Integer, Integer> userAnswers) {
+    public static int countRightAnswers(List<Question> questions,
+                                        Map<Integer, Integer> userAnswers) {
+
         int result = 0;
         for (Integer questionNum : userAnswers.keySet()) {
             Integer rightAnswer = questions.get(questionNum).getRightAnswer();
@@ -61,10 +63,6 @@ public class QuizUtil {
             if (rightAnswer.equals(userAnswer)) {
                 result++;
             }
-        }
-        quiz.setLastResult(result);
-        if (result > quiz.getBestResult()) {
-            quiz.setBestResult(result);
         }
         return result;
     }

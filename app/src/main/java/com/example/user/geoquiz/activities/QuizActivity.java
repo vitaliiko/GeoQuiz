@@ -100,6 +100,7 @@ public class QuizActivity
                 break;
             }
             case R.id.btn_complete: {
+                saveResults();
                 goToResultActivity();
                 break;
             }
@@ -184,12 +185,7 @@ public class QuizActivity
     }
 
     private void goToResultActivity() {
-        int result = QuizUtil.countRightAnswers(quiz, questions, userAnswers);
-        String spentTime = QuizUtil.countSpentTime(startTime);
-
         Intent intent = new Intent(this, ResultActivity.class);
-        intent.putExtra("result", result);
-        intent.putExtra("spentTime", spentTime);
         intent.putExtra(Quiz.class.getSimpleName(), quiz);
         startActivity(intent);
     }
@@ -264,6 +260,17 @@ public class QuizActivity
             userAnswerText.setTextColor(Color.GREEN);
         } else {
             userAnswerText.setTextColor(Color.RED);
+        }
+    }
+
+    private void saveResults() {
+        int result = QuizUtil.countRightAnswers(questions, userAnswers);
+        String spentTime = QuizUtil.countSpentTime(startTime);
+
+        quiz.setLastResult(result);
+        quiz.setSpentTime(spentTime);
+        if (result > quiz.getBestResult()) {
+            quiz.setBestResult(result);
         }
     }
 }

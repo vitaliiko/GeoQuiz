@@ -64,7 +64,7 @@ public class StartQuizActivity extends AppCompatActivity implements View.OnClick
 
     private void prepareQuizInfo() {
         quizNameText.setText(quiz.getName());
-        image.setImageResource(quiz.getTitleImage());
+        image.setImageResource(quiz.getMainImage());
         quizDescriptionText.setText(quiz.getDescription());
         quizAttemptsText.setText(Integer.toString(quiz.getAttempts()));
         quizBestResultText.setText(Integer.toString(quiz.getBestResult()));
