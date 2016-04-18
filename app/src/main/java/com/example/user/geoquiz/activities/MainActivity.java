@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
         }
-        intent.putExtra("quiz", quiz);
+        intent.putExtra(Quiz.class.getSimpleName(), quiz);
         startActivity(intent);
     }
 }
