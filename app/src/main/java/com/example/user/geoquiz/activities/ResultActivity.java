@@ -1,5 +1,6 @@
 package com.example.user.geoquiz.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +8,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.user.geoquiz.R;
+import com.example.user.geoquiz.model.Quiz;
 import com.example.user.geoquiz.utils.QuizUtil;
 
 public class ResultActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Quiz quiz;
+    private int result;
+    private String spentTime;
 
     private TextView messageText;
     private TextView resultText;
@@ -19,27 +25,50 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_result);
+
+        quiz = (Quiz) getIntent().getSerializableExtra(Quiz.class.getSimpleName());
+        result = (int) getIntent().getSerializableExtra("result");
+        spentTime = (String) getIntent().getSerializableExtra("spentTime");
+
+        initViews();
+        prepareResultInfo();
+        setOnClickListener();
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.btn_try_again: {
+                Intent intent = new Intent(this, QuizActivity.class);
+                intent.putExtra(Quiz.class.getSimpleName(), quiz);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btn_main_menu: {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            }
+        }
     }
 
-//    private void initViews() {
-//        messageText = (TextView) findViewById(R.id.message);
-//        resultText = (TextView) findViewById(R.id.result);
-//        bestResultText = (TextView) findViewById(R.id.bestResult);
-//        spentTimeText = (TextView) findViewById(R.id.spentTime);
-//    }
-//
-//    private void prepareResultInfo() {
-//        messageText.setText(QuizUtil.generateMessage(result));
-//
-//        resultText.setText(Integer.toString(this.result) + " of " + QuizUtil.QUESTIONS_COUNT);
-//
-//        bestResultText.setText(Integer.toString(quiz.getBestResult()));
-//
-//        spentTimeText.setText(QuizUtil.countSpentTime(startTime));
-//    }
+    private void setOnClickListener() {
+        findViewById(R.id.btn_try_again).setOnClickListener(this);
+        findViewById(R.id.btn_main_menu).setOnClickListener(this);
+    }
+
+    private void initViews() {
+        messageText = (TextView) findViewById(R.id.text_message);
+        resultText = (TextView) findViewById(R.id.text_result);
+        bestResultText = (TextView) findViewById(R.id.text_best_result);
+        spentTimeText = (TextView) findViewById(R.id.text_spent_time);
+    }
+
+    private void prepareResultInfo() {
+        messageText.setText(QuizUtil.generateMessage(result));
+        resultText.setText(Integer.toString(result) + " of " + QuizUtil.QUESTIONS_COUNT);
+        bestResultText.setText(Integer.toString(quiz.getBestResult()));
+        spentTimeText.setText(spentTime);
+    }
 }

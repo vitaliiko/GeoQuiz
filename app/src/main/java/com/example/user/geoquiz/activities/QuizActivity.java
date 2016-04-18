@@ -184,9 +184,13 @@ public class QuizActivity
     }
 
     private void goToResultActivity() {
+        int result = QuizUtil.countRightAnswers(quiz, questions, userAnswers);
+        String spentTime = QuizUtil.countSpentTime(startTime);
+
         Intent intent = new Intent(this, ResultActivity.class);
-        intent.putExtra("result", QuizUtil.countRightAnswers(quiz, questions, userAnswers));
-        intent.putExtra("spentTime", QuizUtil.countSpentTime(startTime));
+        intent.putExtra("result", result);
+        intent.putExtra("spentTime", spentTime);
+        intent.putExtra(Quiz.class.getSimpleName(), quiz);
         startActivity(intent);
     }
 
