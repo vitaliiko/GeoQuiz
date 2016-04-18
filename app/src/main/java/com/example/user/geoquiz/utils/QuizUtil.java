@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.user.geoquiz.R;
 import com.example.user.geoquiz.model.Question;
 import com.example.user.geoquiz.model.Quiz;
 import com.google.gson.Gson;
@@ -67,22 +68,23 @@ public class QuizUtil {
         return result;
     }
 
-    public static String generateMessage(int result) {
+    public static int generateMessage(int result) {
         switch (result) {
-            case 1: return "BAD!";
-            case 2: return "Not enough!";
-            case 3: return "Not bad!";
-            case 4: return "Nice!";
-            case 5: return "Awesome!";
-            default: return "Looser!";
+            case 1: return R.string.bad;
+            case 2: return R.string.not_enough;
+            case 3: return R.string.not_bad;
+            case 4: return R.string.nice;
+            case 5: return R.string.awesome;
+            default: return R.string.looser;
         }
     }
 
-    public static String countSpentTime(long startTime) {
+    public static String countSpentTime(long startTime, Context context) {
         long currentTime = System.currentTimeMillis();
         long spentTime = Math.abs(currentTime - startTime);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(spentTime);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(spentTime) - minutes * 60;
-        return minutes + " minutes, " + seconds + " seconds";
+        return minutes + context.getString(R.string.minutes) +
+                seconds + context.getString(R.string.seconds);
     }
 }

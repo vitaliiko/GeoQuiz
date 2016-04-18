@@ -28,7 +28,7 @@
                 style="@style/QuestionTextStyle"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:text="of"/>
+                android:text="@string/of"/>
 
             <TextView
                 android:id="@+id/text_question_count"
@@ -89,26 +89,26 @@
                 android:enabled="false"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="Prev"/>
+                android:text="@string/prev"/>
 
             <Button
                 android:id="@+id/btn_show_answer"
                 style="@style/QuizActivityButtonsStyle"
                 android:enabled="false"
-                android:text="Show answer"/>
+                android:text="@string/show_answer"/>
 
             <Button
                 android:id="@+id/btn_complete"
                 style="@style/QuizActivityButtonsStyle"
                 android:visibility="gone"
-                android:text="Done!"/>
+                android:text="@string/done"/>
 
             <Button
                 android:id="@+id/btn_next"
                 style="@style/QuizActivityButtonsStyle"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="Next"/>
+                android:text="@string/next"/>
 
         </LinearLayout>
 

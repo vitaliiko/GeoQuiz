@@ -62,10 +62,11 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void prepareResultInfo() {
-        messageText.setText(QuizUtil.generateMessage(quiz.getLastResult()));
+        int stringId = QuizUtil.generateMessage(quiz.getLastResult());
+        messageText.setText(getString(stringId));
         bestResultText.setText(Integer.toString(quiz.getBestResult()));
         spentTimeText.setText(quiz.getSpentTime());
         resultText.setText(Integer.toString(quiz.getLastResult())
-                + " of " + QuizUtil.QUESTIONS_COUNT);
+                + getString(R.string.of) + QuizUtil.QUESTIONS_COUNT);
     }
 }

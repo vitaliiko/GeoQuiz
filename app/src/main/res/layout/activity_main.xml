@@ -32,7 +32,7 @@
             android:layout_toRightOf="@+id/img_architectural"
             android:layout_alignTop="@+id/img_architectural"
             style="@style/HeaderFontStyle"
-            android:text="Architectural monuments"/>
+            android:text="@string/architectural_monuments"/>
 
     </RelativeLayout>
 
@@ -58,7 +58,7 @@
             android:layout_toRightOf="@+id/img_modern_buildings"
             android:layout_alignTop="@+id/img_modern_buildings"
             style="@style/HeaderFontStyle"
-            android:text="Modern buildings"/>
+            android:text="@string/modern_buildings"/>
 
     </RelativeLayout>
 

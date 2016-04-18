@@ -204,7 +204,6 @@ public class QuizActivity
         userAnswers.clear();
         showingAnswers.clear();
         prepareQuestion();
-        nextButton.setText("Next");
     }
 
     private void saveUserAnswer() {
@@ -251,9 +250,9 @@ public class QuizActivity
     }
 
     private void showAnswer(String userAnswer, String rightAnswer) {
-        userAnswerText.setText("Your answer: " + userAnswer);
+        userAnswerText.setText(R.string.your_answer + userAnswer);
         userAnswerText.setVisibility(View.VISIBLE);
-        rightAnswerText.setText("Right answer: " + rightAnswer);
+        rightAnswerText.setText(R.string.right_answer + rightAnswer);
         rightAnswerText.setVisibility(View.VISIBLE);
 
         if (userAnswer.equals(rightAnswer)) {
@@ -265,7 +264,7 @@ public class QuizActivity
 
     private void saveResults() {
         int result = QuizUtil.countRightAnswers(questions, userAnswers);
-        String spentTime = QuizUtil.countSpentTime(startTime);
+        String spentTime = QuizUtil.countSpentTime(startTime, this);
 
         quiz.setLastResult(result);
         quiz.setSpentTime(spentTime);

@@ -48,7 +48,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 style="@style/QuestionTextStyle"
-                android:text="Attempts made: "/>
+                android:text="@string/attempts_made"/>
 
             <TextView
                 android:id="@+id/text_quiz_attempts"
@@ -71,7 +71,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 style="@style/QuestionTextStyle"
-                android:text="Best result: "/>
+                android:text="@string/best_result"/>
 
             <TextView
                 android:id="@+id/text_best_result"
@@ -94,13 +94,13 @@
                 style="@style/QuizActivityButtonsStyle"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="Reset"/>
+                android:text="@string/reset"/>
 
             <Button
                 android:id="@+id/btn_start"
                 style="@style/QuizActivityButtonsStyle"
                 android:layout_marginRight="16dp"
-                android:text="Start"/>
+                android:text="@string/start"/>
 
         </LinearLayout>
 
